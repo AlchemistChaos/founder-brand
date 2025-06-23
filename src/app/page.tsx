@@ -1,103 +1,127 @@
-import Image from "next/image";
+'use client'
+
+import { useState } from 'react'
+import ContentInput from '@/components/ContentInput'
+import ThreadTypeSelector from '@/components/ThreadTypeSelector'
+import ResultsDisplay from '@/components/ResultsDisplay'
+import SettingsModal from '@/components/SettingsModal'
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [content, setContent] = useState('')
+  const [threadType, setThreadType] = useState('summary')
+  const [usePersonalContext, setUsePersonalContext] = useState(false)
+  const [isGenerating, setIsGenerating] = useState(false)
+  const [results, setResults] = useState<{
+    thread: string[]
+    artPrompts: string[]
+  } | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [showSettings, setShowSettings] = useState(false)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const handleGenerate = async () => {
+    if (!content.trim()) return
+
+    setIsGenerating(true)
+    setResults(null)
+    setError(null)
+
+    try {
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          content,
+          threadType,
+          usePersonalContext,
+        }),
+      })
+
+      const data = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Generation failed')
+      }
+      
+      setResults(data)
+    } catch (error) {
+      console.error('Generation failed:', error)
+      setError(error instanceof Error ? error.message : 'An unexpected error occurred')
+    } finally {
+      setIsGenerating(false)
+    }
+  }
+
+  return (
+    <main className="max-w-4xl mx-auto">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 mb-8">
+        <ContentInput
+          content={content}
+          setContent={setContent}
+          onGenerate={handleGenerate}
+          isGenerating={isGenerating}
+        />
+        
+        <div className="flex items-center justify-between mt-4 mb-6">
+          <label className="flex items-center space-x-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={usePersonalContext}
+              onChange={(e) => setUsePersonalContext(e.target.checked)}
+              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <span className="text-sm text-gray-700 dark:text-gray-300">
+              🧠 Use Personal Context
+            </span>
+          </label>
+          
+          <button
+            onClick={() => setShowSettings(true)}
+            className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
           >
-            Read our docs
-          </a>
+            ⚙️ Settings
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+
+        <ThreadTypeSelector
+          selectedType={threadType}
+          onTypeChange={setThreadType}
+        />
+      </div>
+
+      {error && (
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-6">
+          <div className="flex items-start space-x-3">
+            <div className="text-red-500 text-xl">⚠️</div>
+            <div>
+              <h3 className="text-red-800 dark:text-red-300 font-medium mb-2">
+                Generation Failed
+              </h3>
+              <p className="text-red-700 dark:text-red-400 text-sm mb-3">
+                {error}
+              </p>
+              <div className="text-red-600 dark:text-red-400 text-xs">
+                <p className="mb-1">💡 <strong>Workaround:</strong></p>
+                <ul className="list-disc list-inside space-y-1 ml-4">
+                  <li>Visit the article directly and copy the text content</li>
+                  <li>Paste the copied text into the input field above</li>
+                  <li>Try again with the raw text instead of the URL</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {results && <ResultsDisplay results={results} />}
+
+      {showSettings && (
+        <SettingsModal
+          isOpen={showSettings}
+          onClose={() => setShowSettings(false)}
+        />
+      )}
+    </main>
+  )
 }
