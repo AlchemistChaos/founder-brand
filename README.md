@@ -15,6 +15,14 @@ A fully client-side Next.js application that transforms YouTube videos, web arti
 - 📋 **One-Click Copy**: Easy copying of threads and prompts
 - 🌙 **Dark Mode**: Automatic dark/light theme support
 
+### 🚀 Enhanced Features
+
+- **🎯 100+ Unique Hooks**: Smart hook selection from a curated library of 100+ engaging Twitter thread openers
+- **📝 Custom Prompts**: Create and manage specialized prompt styles (Viral, Educational, Personal Brand)
+- **⚡ Intelligent Hook Matching**: AI-powered hook selection based on content analysis
+- **🎨 Dynamic Prompt System**: Database-driven custom prompts for different content styles
+- **📊 Enhanced Analytics**: Track which features are being used for better optimization
+
 ## Setup Instructions
 
 ### 1. Environment Variables
@@ -33,8 +41,13 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ### 2. Supabase Database Setup
 
 1. Create a new Supabase project
-2. Run the SQL commands in `src/lib/database.sql` to create the required tables
-3. The app uses Row Level Security with public access (no authentication required)
+2. Run the SQL commands in `src/lib/database.sql` to create the user contexts table
+3. Run the SQL commands in `src/lib/database-prompts.sql` to create the custom prompts table
+4. The app uses Row Level Security with public access (no authentication required)
+
+**Database Tables:**
+- `user_contexts`: Stores personal context data for thread personalization
+- `custom_prompts`: Stores custom prompt templates for different content styles
 
 ### 3. Install Dependencies
 
@@ -84,8 +97,26 @@ Visit [http://localhost:3000](http://localhost:3000) to use the application.
 
 ## API Endpoints
 
-- `POST /api/generate` - Generate threads and art prompts
+- `POST /api/generate` - Generate threads and art prompts (enhanced with custom prompts and hooks)
 - `GET /api/proxy` - CORS proxy for article fetching
+- `GET /api/custom-prompts` - Fetch all custom prompts
+- `POST /api/custom-prompts` - Create new custom prompt
+- `PUT /api/custom-prompts` - Update existing custom prompt
+- `DELETE /api/custom-prompts` - Delete custom prompt
+
+### Enhanced Generation API
+
+The `/api/generate` endpoint now supports additional parameters:
+
+```json
+{
+  "content": "Your content here",
+  "threadType": "summary",
+  "usePersonalContext": false,
+  "customPromptId": "uuid-of-custom-prompt",
+  "useEnhancedHooks": true
+}
+```
 
 ## Cost Estimates
 

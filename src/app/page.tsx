@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import ContentInput from '@/components/ContentInput'
 import ThreadTypeSelector from '@/components/ThreadTypeSelector'
+import CustomPromptSelector from '@/components/CustomPromptSelector'
 import ResultsDisplay from '@/components/ResultsDisplay'
 import SettingsModal from '@/components/SettingsModal'
 
@@ -10,6 +11,8 @@ export default function Home() {
   const [content, setContent] = useState('')
   const [threadType, setThreadType] = useState('summary')
   const [usePersonalContext, setUsePersonalContext] = useState(false)
+  const [customPromptId, setCustomPromptId] = useState<string>('')
+  const [useEnhancedHooks, setUseEnhancedHooks] = useState(true)
   const [isGenerating, setIsGenerating] = useState(false)
   const [results, setResults] = useState<{
     thread: string[]
@@ -35,6 +38,8 @@ export default function Home() {
           content,
           threadType,
           usePersonalContext,
+          customPromptId: customPromptId || undefined,
+          useEnhancedHooks,
         }),
       })
 
@@ -87,6 +92,15 @@ export default function Home() {
         <ThreadTypeSelector
           selectedType={threadType}
           onTypeChange={setThreadType}
+        />
+      </div>
+
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 mb-8">
+        <CustomPromptSelector
+          selectedPromptId={customPromptId}
+          onPromptChange={setCustomPromptId}
+          useEnhancedHooks={useEnhancedHooks}
+          onEnhancedHooksChange={setUseEnhancedHooks}
         />
       </div>
 

@@ -1,5 +1,6 @@
 import OpenAI from 'openai'
 import { supabase } from '@/lib/supabase'
+import { getRelevantHooks, getRandomHooks } from '@/lib/hooks'
 
 // Check for OpenAI API key
 if (!process.env.OPENAI_API_KEY) {
@@ -23,27 +24,24 @@ const THREAD_TYPE_PROMPTS = {
   curated: "Curate the best insights and present them in a well-organized, valuable compilation.",
 }
 
-const HOOK_EXAMPLES = [
-  "Here's the truth no one's telling you about",
-  "I've been studying [topic] for [time] and discovered",
-  "Everyone thinks [common belief], but here's what actually happens:",
-  "The [industry/field] doesn't want you to know this:",
-  "After [experience/research], I learned something shocking:",
-  "Most people get [topic] completely wrong. Here's why:",
-  "This changed everything I thought I knew about",
-  "The data reveals something surprising about",
-  "I used to believe [common belief] until I discovered",
-  "If you only learn one thing about [topic], make it this:",
-]
+// Enhanced generation options
+interface GenerationOptions {
+  content: string
+  threadType: string
+  usePersonalContext?: boolean
+  customPromptId?: string
+  useEnhancedHooks?: boolean
+}
 
-export async function generateThread(
-  content: string,
-  threadType: string,
-  usePersonalContext: boolean = false
-): Promise<string[]> {
+// New enhanced function with options
+export async function generateThreadEnhanced(options: GenerationOptions): Promise<string[]> {
+  const { content, threadType, usePersonalContext = false, customPromptId, useEnhancedHooks = true } = options
+  
   try {
     let personalContext = ''
+    let customPrompt = ''
     
+    // Load personal context if requested
     if (usePersonalContext) {
       const { data: contexts } = await supabase
         .from('user_contexts')
@@ -54,15 +52,35 @@ export async function generateThread(
         personalContext = contexts.map(c => c.content).join('\n\n')
       }
     }
+    
+    // Load custom prompt if specified
+    if (customPromptId) {
+      const { data: prompt } = await supabase
+        .from('custom_prompts')
+        .select('system_prompt')
+        .eq('id', customPromptId)
+        .eq('is_active', true)
+        .single()
+      
+      if (prompt) {
+        customPrompt = prompt.system_prompt
+      }
+    }
+
+    // Get relevant hooks (enhanced 100-hook system)
+    const hooks = useEnhancedHooks 
+      ? getRelevantHooks(content, 15) // Get 15 relevant hooks
+      : getRandomHooks(10) // Fallback to 10 random hooks
 
     const threadPrompt = THREAD_TYPE_PROMPTS[threadType as keyof typeof THREAD_TYPE_PROMPTS] || THREAD_TYPE_PROMPTS.summary
 
-    const systemPrompt = `You are an expert Twitter thread creator. Your job is to transform content into engaging, viral Twitter threads.
+    // Use custom prompt if available, otherwise use default
+    const systemPrompt = customPrompt || `You are an expert Twitter thread creator. Your job is to transform content into engaging, viral Twitter threads.
 
 THREAD REQUIREMENTS:
 - Create 8-12 tweets maximum
 - Each tweet must be under 280 characters
-- Start with an engaging hook from these examples: ${HOOK_EXAMPLES.join('; ')}
+- Start with an engaging hook from these examples: ${hooks.join('; ')}
 - Use emojis strategically (1-2 per tweet)
 - Include line breaks for readability
 - End with a call-to-action or thought-provoking question
@@ -75,20 +93,21 @@ STYLE GUIDELINES:
 - Use formatting (bullet points, line breaks) for clarity
 - Make each tweet valuable on its own
 
+HOOK SELECTION:
+Choose the most relevant hook from the provided examples that best fits the content. Adapt and customize the hook to match the specific topic and tone.
+
 THREAD TYPE: ${threadPrompt}
 
 ${personalContext ? `PERSONAL CONTEXT TO INCORPORATE:
 ${personalContext}
 
-Use this personal context to make the thread more authentic and personalized.` : ''}
-
-Transform the following content into a Twitter thread:`
+Use this personal context to make the thread more authentic and personalized.` : ''}`
 
     const response = await openai.chat.completions.create({
       model: 'gpt-4',
       messages: [
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: content }
+        { role: 'user', content: `Transform the following content into a Twitter thread:\n\n${content}` }
       ],
       temperature: 0.7,
       max_tokens: 2000,
@@ -119,9 +138,23 @@ Transform the following content into a Twitter thread:`
 
     return tweets
   } catch (error) {
-    console.error('Thread generation failed:', error)
+    console.error('Enhanced thread generation failed:', error)
     throw new Error('Failed to generate Twitter thread')
   }
+}
+
+// Backwards compatible function
+export async function generateThread(
+  content: string,
+  threadType: string,
+  usePersonalContext: boolean = false
+): Promise<string[]> {
+  return generateThreadEnhanced({
+    content,
+    threadType,
+    usePersonalContext,
+    useEnhancedHooks: true
+  })
 }
 
 export async function generateArtPrompts(content: string): Promise<string[]> {
@@ -173,5 +206,70 @@ Create prompts that would make compelling visual content to accompany the thread
   } catch (error) {
     console.error('Art prompt generation failed:', error)
     throw new Error('Failed to generate AI art prompts')
+  }
+}
+
+// Custom prompt management functions
+export async function getCustomPrompts() {
+  try {
+    const { data, error } = await supabase
+      .from('custom_prompts')
+      .select('*')
+      .eq('is_active', true)
+      .order('created_at', { ascending: false })
+
+    if (error) throw error
+    return data || []
+  } catch (error) {
+    console.error('Failed to get custom prompts:', error)
+    return []
+  }
+}
+
+export async function createCustomPrompt(name: string, description: string, systemPrompt: string) {
+  try {
+    const { data, error } = await supabase
+      .from('custom_prompts')
+      .insert([{ name, description, system_prompt: systemPrompt }])
+      .select()
+      .single()
+
+    if (error) throw error
+    return data
+  } catch (error) {
+    console.error('Failed to create custom prompt:', error)
+    throw new Error('Failed to create custom prompt')
+  }
+}
+
+export async function updateCustomPrompt(id: string, updates: { name?: string; description?: string; system_prompt?: string; is_active?: boolean }) {
+  try {
+    const { data, error } = await supabase
+      .from('custom_prompts')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single()
+
+    if (error) throw error
+    return data
+  } catch (error) {
+    console.error('Failed to update custom prompt:', error)
+    throw new Error('Failed to update custom prompt')
+  }
+}
+
+export async function deleteCustomPrompt(id: string) {
+  try {
+    const { error } = await supabase
+      .from('custom_prompts')
+      .delete()
+      .eq('id', id)
+
+    if (error) throw error
+    return true
+  } catch (error) {
+    console.error('Failed to delete custom prompt:', error)
+    throw new Error('Failed to delete custom prompt')
   }
 }
