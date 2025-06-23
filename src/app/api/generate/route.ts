@@ -18,17 +18,31 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-      // Extract content based on type (handles URLs, PDFs, etc.)
+      // Check if content needs extraction or is already processed text
       let extractedContent
-      try {
-        extractedContent = await extractContent(content)
-      } catch (extractionError) {
-        // If extraction fails, treat as raw text
-        console.warn('Content extraction failed, using as raw text:', extractionError)
+      
+      // If content looks like a URL, try to extract it
+      const isUrl = content.trim().match(/^https?:\/\//) || content.trim().includes('youtube.com') || content.trim().includes('youtu.be')
+      
+      if (isUrl && content.length < 500) {
+        // Looks like a URL, try to extract
+        try {
+          extractedContent = await extractContent(content)
+        } catch (extractionError) {
+          // If extraction fails, treat as raw text
+          console.warn('Content extraction failed, using as raw text:', extractionError)
+          extractedContent = {
+            type: 'text' as const,
+            content: content,
+            title: 'Raw Text Content'
+          }
+        }
+      } else {
+        // Content is already processed text (transcript, article text, etc.)
         extractedContent = {
           type: 'text' as const,
           content: content,
-          title: 'Raw Text Content'
+          title: 'Processed Content'
         }
       }
 
