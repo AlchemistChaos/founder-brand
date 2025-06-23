@@ -1,6 +1,7 @@
 import { extractFromYoutube } from './youtube'
 import { extractFromArticle } from './article'
 import { extractFromPDF } from './pdf'
+import { YouTubeClientExtractor } from '@/lib/youtube-client'
 
 export interface ExtractedContent {
   type: 'youtube' | 'article' | 'pdf' | 'text'
@@ -12,9 +13,32 @@ export interface ExtractedContent {
 export async function extractContent(input: string): Promise<ExtractedContent> {
   const trimmedInput = input.trim()
   
-  // Check if it's a YouTube URL
+  // Check if it's a YouTube URL - use client-side extraction if available
   if (isYouTubeUrl(trimmedInput)) {
-    return await extractFromYoutube(trimmedInput)
+    // Try client-side extraction first (for browser environment)
+    if (typeof window !== 'undefined') {
+      try {
+        const youtubeData = await YouTubeClientExtractor.extractFromUrl(trimmedInput)
+        return {
+          type: 'youtube',
+          title: youtubeData.title,
+          content: youtubeData.rawTranscript,
+          url: trimmedInput
+        }
+      } catch (clientError) {
+        console.warn('Client-side YouTube extraction failed, trying server-side:', clientError)
+        // Fallback to server-side extraction
+        try {
+          return await extractFromYoutube(trimmedInput)
+        } catch (serverError) {
+          console.error('Both client and server-side YouTube extraction failed:', serverError)
+          throw new Error('Failed to extract YouTube transcript. Please try copying the video transcript manually.')
+        }
+      }
+    } else {
+      // Server-side environment - use original method
+      return await extractFromYoutube(trimmedInput)
+    }
   }
   
   // Check if it's a web article URL
