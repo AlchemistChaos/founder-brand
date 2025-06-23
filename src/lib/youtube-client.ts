@@ -32,35 +32,18 @@ export class YouTubeClientExtractor {
 
   static async extractTranscript(videoId: string): Promise<YouTubeVideoInfo> {
     try {
-      // Step 1: Get video page HTML to extract initial data
-      // Try direct fetch first, fallback to proxy if CORS issues
+      // Step 1: Get video page HTML via server-side proxy (CORS-safe)
       let html: string
       
-      try {
-        const videoUrl = `${this.YOUTUBE_BASE_URL}/watch?v=${videoId}`
-        const response = await fetch(videoUrl, {
-          method: 'GET',
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
-          }
-        })
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch video page: ${response.status}`)
-        }
-        
-        html = await response.text()
-      } catch (directFetchError) {
-        // Fallback to server-side proxy
-        console.warn('Direct fetch failed, trying proxy:', directFetchError)
-        const proxyResponse = await fetch(`/api/youtube-proxy?videoId=${videoId}`)
-        
-        if (!proxyResponse.ok) {
-          throw new Error(`Proxy fetch failed: ${proxyResponse.status}`)
-        }
-        
-        html = await proxyResponse.text()
+      console.log('Fetching video data via proxy for video:', videoId)
+      const proxyResponse = await fetch(`/api/youtube-proxy?videoId=${videoId}`)
+      
+      if (!proxyResponse.ok) {
+        const errorData = await proxyResponse.json().catch(() => ({ error: 'Unknown error' }))
+        throw new Error(`Proxy fetch failed: ${proxyResponse.status} - ${errorData.error || 'Unknown error'}`)
       }
+      
+      html = await proxyResponse.text()
       
       // Step 2: Extract video title
       const title = this.extractTitle(html)
@@ -115,45 +98,83 @@ export class YouTubeClientExtractor {
 
   private static async extractTranscriptFromHtml(html: string, videoId: string): Promise<YouTubeTranscriptItem[]> {
     try {
+      console.log('Attempting to extract transcript from HTML for video:', videoId)
+      
       // Method 1: Try to find captions tracks in the HTML
-      const captionsMatch = html.match(/"captions":({[^}]*?"captionTracks":\[[^\]]*?\][^}]*?})/)
+      const captionsMatch = html.match(/"captions":\s*({[^{}]*?"captionTracks":\s*\[[^\]]*?\][^{}]*?})/)
       
       if (captionsMatch) {
-        const captionsData = JSON.parse(captionsMatch[1])
-        const tracks = captionsData.playerCaptionsTracklistRenderer?.captionTracks
-        
-        if (tracks && tracks.length > 0) {
-          // Prefer English captions, fallback to first available
-          const englishTrack = tracks.find((track: any) => 
-            track.languageCode === 'en' || track.languageCode === 'en-US'
-          ) || tracks[0]
+        try {
+          console.log('Found captions data, parsing...')
+          const captionsData = JSON.parse(captionsMatch[1])
+          const tracks = captionsData.playerCaptionsTracklistRenderer?.captionTracks
           
-          if (englishTrack?.baseUrl) {
-            return await this.fetchTranscriptFromUrl(englishTrack.baseUrl)
+          if (tracks && tracks.length > 0) {
+            console.log(`Found ${tracks.length} caption tracks`)
+            // Prefer English captions, fallback to first available
+            const englishTrack = tracks.find((track: any) => 
+              track.languageCode === 'en' || track.languageCode === 'en-US'
+            ) || tracks[0]
+            
+            if (englishTrack?.baseUrl) {
+              console.log('Using caption track:', englishTrack.languageCode || 'unknown')
+              return await this.fetchTranscriptFromUrl(englishTrack.baseUrl)
+            }
           }
+        } catch (parseError) {
+          console.warn('Failed to parse captions data from method 1:', parseError)
         }
       }
 
       // Method 2: Try alternative extraction from ytInitialPlayerResponse
+      console.log('Trying alternative extraction method...')
       const playerResponseMatch = html.match(/var ytInitialPlayerResponse = ({.*?});/)
       
       if (playerResponseMatch) {
-        const playerResponse = JSON.parse(playerResponseMatch[1])
-        const captions = playerResponse?.captions?.playerCaptionsTracklistRenderer?.captionTracks
-        
-        if (captions && captions.length > 0) {
-          const track = captions.find((t: any) => t.languageCode === 'en') || captions[0]
-          if (track?.baseUrl) {
-            return await this.fetchTranscriptFromUrl(track.baseUrl)
+        try {
+          const playerResponse = JSON.parse(playerResponseMatch[1])
+          const captions = playerResponse?.captions?.playerCaptionsTracklistRenderer?.captionTracks
+          
+          if (captions && captions.length > 0) {
+            console.log(`Found ${captions.length} caption tracks via method 2`)
+            const track = captions.find((t: any) => t.languageCode === 'en') || captions[0]
+            if (track?.baseUrl) {
+              console.log('Using caption track from method 2:', track.languageCode || 'unknown')
+              return await this.fetchTranscriptFromUrl(track.baseUrl)
+            }
           }
+        } catch (parseError) {
+          console.warn('Failed to parse player response from method 2:', parseError)
         }
       }
 
-      throw new Error('No captions found')
+      // Method 3: Try window.ytInitialPlayerResponse pattern
+      console.log('Trying window.ytInitialPlayerResponse pattern...')
+      const windowPlayerMatch = html.match(/window\["ytInitialPlayerResponse"\]\s*=\s*({.*?});/)
+      
+      if (windowPlayerMatch) {
+        try {
+          const playerResponse = JSON.parse(windowPlayerMatch[1])
+          const captions = playerResponse?.captions?.playerCaptionsTracklistRenderer?.captionTracks
+          
+          if (captions && captions.length > 0) {
+            console.log(`Found ${captions.length} caption tracks via method 3`)
+            const track = captions.find((t: any) => t.languageCode === 'en') || captions[0]
+            if (track?.baseUrl) {
+              console.log('Using caption track from method 3:', track.languageCode || 'unknown')
+              return await this.fetchTranscriptFromUrl(track.baseUrl)
+            }
+          }
+        } catch (parseError) {
+          console.warn('Failed to parse window player response from method 3:', parseError)
+        }
+      }
+
+      throw new Error('No captions found - this video may not have transcripts available')
       
     } catch (error) {
-      console.error('Transcript extraction error:', error)
-      throw new Error('Unable to extract transcript from this video')
+      console.error('Transcript extraction error for video', videoId, ':', error)
+      throw new Error('Unable to extract transcript from this video. Please ensure the video has captions enabled.')
     }
   }
 
@@ -161,25 +182,16 @@ export class YouTubeClientExtractor {
     try {
       let xmlText: string
       
-      try {
-        const response = await fetch(url)
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch transcript: ${response.status}`)
-        }
-        
-        xmlText = await response.text()
-      } catch (directFetchError) {
-        // Fallback to server-side proxy for transcript
-        console.warn('Direct transcript fetch failed, trying proxy:', directFetchError)
-        const proxyResponse = await fetch(`/api/youtube-proxy?transcriptUrl=${encodeURIComponent(url)}`)
-        
-        if (!proxyResponse.ok) {
-          throw new Error(`Proxy transcript fetch failed: ${proxyResponse.status}`)
-        }
-        
-        xmlText = await proxyResponse.text()
+      // Use server-side proxy for transcript URLs (CORS-safe)
+      console.log('Fetching transcript via proxy from:', url)
+      const proxyResponse = await fetch(`/api/youtube-proxy?transcriptUrl=${encodeURIComponent(url)}`)
+      
+      if (!proxyResponse.ok) {
+        const errorData = await proxyResponse.json().catch(() => ({ error: 'Unknown error' }))
+        throw new Error(`Proxy transcript fetch failed: ${proxyResponse.status} - ${errorData.error || 'Unknown error'}`)
       }
+      
+      xmlText = await proxyResponse.text()
       
       // Parse XML transcript
       const parser = new DOMParser()
