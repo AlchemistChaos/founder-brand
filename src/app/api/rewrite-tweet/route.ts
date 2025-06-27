@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { RewriteRequest, RewriteResponse } from '@/lib/types';
-import { getToneExamples, getUserContexts, getGlobalRules } from '@/lib/supabase-client';
+import { getUserContexts, getGlobalRules } from '@/lib/supabase-client';
+import { getToneExamples } from '@/lib/supabase-server';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,

@@ -3,7 +3,8 @@ import OpenAI from 'openai';
 import { GenerateHooksRequest, GenerateHooksResponse, Hook, ContentAnalysis, TemplateMatch, PowerHook, PowerHookMatch } from '@/lib/types';
 import fs from 'fs';
 import path from 'path';
-import { getToneExamples, getUserContexts, getGlobalRules, getPowerHooks } from '@/lib/supabase-client';
+import { getUserContexts, getGlobalRules } from '@/lib/supabase-client';
+import { getToneExamples, getPowerHooks } from '@/lib/supabase-server';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY!,
@@ -538,10 +539,10 @@ ${toneExamples}`
     : '';
 
   const toneVariation = variation === 1
-    ? "Create a bold, attention-grabbing hook with maximum viral potential."
-    : "Create a more conversational, relatable hook that creates strong emotional connection.";
+    ? "Go viral + wise - bold opener with data backing. 'Plot twist: I spent $X learning this...'"
+    : "Be relatable + insightful - personal story with framework. 'Real talk - here's what changed everything...'";
 
-  let prompt = `You are an expert Twitter thread writer. Create a completely original, creative hook (opening tweet) for this content.
+  let prompt = `You're the perfect hybrid - 50% TikTok viral energy, 50% sophisticated founder wisdom. You grab attention like TikTok but deliver insights like Alex Hormozi. Create a hook that STOPS the scroll AND delivers real value.
 
 Content:
 ${content}${personalContextText}${globalRulesText}${toneExamplesText}
@@ -559,17 +560,35 @@ CRITICAL CHARACTER REQUIREMENTS:
 - If the hook approaches 280 characters, make it more concise
 - Never exceed 279 characters under any circumstances
 
+VIRAL WISDOM HYBRID PERSONALITY (50/50):
+TIKTOK ENERGY (50%):
+- Use scroll-stopping openers: "Plot twist," "This is gonna piss some people off," "Nah," "Real talk"
+- Create "wait, what?" moments that grab attention
+- Sound conversational and relatable - like your smartest friend
+- Use natural contractions and engaging language
+
+FOUNDER WISDOM (50%):
+- Include specific data, costs, timeframes: "I spent $2M testing this" or "Revenue increased 47%"
+- Reference frameworks and systematic thinking
+- Admit expensive failures and lessons learned
+- Show earned authority through experience
+
 TONE AND STYLE REQUIREMENTS:
-${toneExamples ? '- MATCH THE EXACT TONE AND STYLE from the provided examples above' : '- Use an engaging, conversational tone that matches the content'}
-- Write in the same voice, style, and personality as shown in the examples
-- Use similar sentence structure, vocabulary, and writing patterns
-- Maintain the same level of formality/informality as the examples
-- If examples are casual, be casual. If examples are professional, be professional.
+${toneExamples ? '- MATCH THE EXACT TONE AND STYLE from the provided examples above' : '- Use that perfect viral wisdom hybrid energy'}
+- Start bold and attention-grabbing, then get specific and valuable
+- Combine emotional hooks with logical insights
+- Make it feel like exclusive knowledge from someone who's actually done it
 
 Instructions:
 ${toneVariation}
 
-Think viral potential: What would make someone STOP scrolling and want to read more?
+Think viral potential + real value: What would make someone STOP scrolling AND actually learn something? Create curiosity gaps filled with frameworks, challenge assumptions with data, or promise insider knowledge with proof.
+
+Example hybrid energy: 
+- "Plot twist: I spent $500K learning productivity is actually broken. Here's what works..."
+- "This is gonna piss some people off, but after analyzing 1,000+ founders, most advice is trash..."
+- "Real talk - everyone's doing [X] wrong. I used to think the same until I tested this..."
+- "Nah, you've been thinking about this backwards. I wasted 18 months before realizing..."
 
 IMPORTANT: Return ONLY the hook text, no quotes, no explanations, no additional formatting.`;
 
@@ -744,7 +763,7 @@ Template: ${supportingTemplate.template}
 Category: ${supportingTemplate.category}`
     : '';
 
-  let prompt = `You are an expert viral Twitter hook writer. Create a powerful, attention-grabbing hook using this POWER HOOK as your foundation.
+  let prompt = `You're the perfect hybrid - 50% TikTok viral energy, 50% sophisticated founder wisdom. You grab attention like TikTok but deliver insights like Alex Hormozi. Create a hook that STOPS the scroll AND delivers real value.
 
 POWER HOOK FOUNDATION: "${filledPowerHook}"
 Power Hook Category: ${powerHook.category}
@@ -765,19 +784,35 @@ CRITICAL REQUIREMENTS:
 3. VIRAL POTENTIAL: This needs to stop the scroll and create immediate curiosity
 4. CONTENT CONNECTION: Connect the power hook to the specific content provided
 
+VIRAL WISDOM HYBRID PERSONALITY (50/50):
+TIKTOK ENERGY (50%):
+- Use scroll-stopping openers: "Plot twist," "This is gonna piss some people off," "Nah," "Real talk"
+- Create "wait, what?" moments that grab attention
+- Sound conversational and relatable - like your smartest friend
+- Use natural contractions and engaging language
+
+FOUNDER WISDOM (50%):
+- Include specific data, costs, timeframes: "I spent $2M testing this" or "Revenue increased 47%"
+- Reference frameworks and systematic thinking
+- Admit expensive failures and lessons learned
+- Show earned authority through experience
+
 TONE AND STYLE REQUIREMENTS:
-${toneExamples ? '- MATCH THE EXACT TONE AND STYLE from the provided examples above' : '- Use an engaging, conversational tone that matches the content'}
-- Write in the same voice, style, and personality as shown in the examples
-- Use similar sentence structure, vocabulary, and writing patterns
-- Maintain the same level of formality/informality as the examples
+${toneExamples ? '- MATCH THE EXACT TONE AND STYLE from the provided examples above' : '- Use that perfect viral wisdom hybrid energy'}
+- Start bold and attention-grabbing, then get specific and valuable
+- Combine emotional hooks with logical insights
+- Make it feel like exclusive knowledge from someone who's actually done it
 
 POWER HOOK GUIDELINES:
-- ${powerHook.category} hooks should create ${powerHook.type === 'subversive' ? 'challenge conventional thinking' : powerHook.type === 'confrontational' ? 'bold, attention-grabbing statements' : powerHook.type === 'shocking' ? 'surprising revelations' : powerHook.type === 'revealing' ? 'insider knowledge sharing' : 'powerful emotional connection'}
+- ${powerHook.category} hooks should create ${powerHook.type === 'subversive' ? 'challenge conventional thinking: "Plot twist: everything about [X] is wrong. I spent $X learning this..."' : powerHook.type === 'confrontational' ? 'bold statements with backing: "This is gonna piss people off, but the data shows..."' : powerHook.type === 'shocking' ? 'surprising revelations with proof: "99% won\'t believe this, but I tested it for X months..."' : powerHook.type === 'revealing' ? 'insider knowledge with credentials: "Real talk - here\'s what nobody talks about after analyzing X cases..."' : 'powerful emotional connection with substance'}
 - Make it impossible to scroll past
 - Create immediate curiosity gap
-- Promise valuable insight or revelation
+- Promise AND hint at valuable insight or revelation
 
-Example approach: Start with the power hook, then add a brief teaser about what you'll reveal.
+Example hybrid energy: 
+- "Plot twist: I spent $500K learning productivity is actually broken. Here's what works..."
+- "This is gonna piss some people off, but after analyzing 1,000+ founders, most advice is trash..."
+- "Real talk - everyone's doing [X] wrong. I used to think the same until I tested this..."
 
 IMPORTANT: Return ONLY the final hook text, no quotes, no explanations, no additional formatting.`;
 
@@ -785,7 +820,7 @@ IMPORTANT: Return ONLY the final hook text, no quotes, no explanations, no addit
     const completion = await openai.chat.completions.create({
       model: 'gpt-4',
       messages: [{ role: 'user', content: prompt }],
-      temperature: 0.75, // Balanced creativity for viral potential
+      temperature: 0.8, // Higher creativity for personality
       max_tokens: 150,
     });
 
