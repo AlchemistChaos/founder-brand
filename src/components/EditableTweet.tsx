@@ -151,6 +151,19 @@ export default function EditableTweet({
       const afterText = currentText.substring(currentText.indexOf(selectedText.text) + selectedText.text.length)
       const newText = beforeText + data.rewrittenText + afterText
 
+      console.log('📝 Applying rewrite result:', {
+        originalText: selectedText.text,
+        rewrittenText: data.rewrittenText,
+        oldLength: currentText.length,
+        newLength: newText.length,
+        withinLimit: newText.length <= 280
+      })
+
+      // Check if the result is within character limits
+      if (newText.length > 280) {
+        console.warn('⚠️ Rewritten tweet exceeds 280 characters, but applying anyway (API should have handled this)')
+      }
+
       setCurrentText(newText)
       onTweetChange(newText)
       setShowRewriteMenu(false)
