@@ -17,16 +17,35 @@ export interface ContentAnalysis {
   tone: 'inspirational' | 'educational' | 'analytical' | 'controversial' | 'personal';
 }
 
-// Hook data structure
+// Power Hook data structure (new primary hook system)
+export interface PowerHook {
+  id: string;
+  text: string;
+  category: string;
+  type: string;
+  variables: string[];
+}
+
+// Power Hook matching and scoring
+export interface PowerHookMatch {
+  powerHook: PowerHook;
+  score: number;
+  reason: string;
+  variableData: Record<string, string>;
+}
+
+// Hook data structure (updated to support power hooks)
 export interface Hook {
   id: string;
   text: string;
   templateId?: string; // null for custom Claude hooks
   templateTitle?: string;
   templateCategory?: string;
+  powerHookId?: string; // for power hook-based generation
+  powerHookCategory?: string;
   variation: 1 | 2;
-  type: 'template' | 'custom';
-  score?: number; // Template relevance score (for template hooks)
+  type: 'template' | 'custom' | 'power-hook';
+  score?: number; // Template/power hook relevance score
 }
 
 // Hook generation request/response
@@ -38,7 +57,8 @@ export interface GenerateHooksRequest {
 
 export interface GenerateHooksResponse {
   hooks: Hook[];
-  topTemplates: TemplateMatch[]; // Top 5 templates used
+  topTemplates: TemplateMatch[]; // Top 5 templates used (for supporting content)
+  topPowerHooks: PowerHookMatch[]; // Top power hooks selected
   contentAnalysis: ContentAnalysis;
 }
 
@@ -111,6 +131,16 @@ export interface CustomHookContext {
   contentAnalysis: ContentAnalysis;
   personalContext?: string;
   variation: 1 | 2;
+}
+
+// Power hook generation context
+export interface PowerHookGenerationContext {
+  content: string;
+  powerHook: PowerHook;
+  variableData: Record<string, string>;
+  personalContext?: string;
+  toneProfile?: string;
+  templateStructure?: TwitterTemplate; // Supporting template for content structure
 }
 
 // Template scoring and selection

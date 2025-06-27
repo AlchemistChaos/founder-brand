@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { PowerHook } from './types'
 
 // Client-side environment variables must be prefixed with NEXT_PUBLIC_
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -65,6 +66,34 @@ export async function getToneExamples(): Promise<string> {
   } catch (error) {
     console.error('Error reading tone profile:', error)
     return ''
+  }
+}
+
+// Helper function to load power hooks (server-side only)
+export async function getPowerHooks(): Promise<PowerHook[]> {
+  // Check if we're on the server side
+  if (typeof window !== 'undefined') {
+    // Client side - return empty array
+    return []
+  }
+  
+  try {
+    // Server side - read power hooks
+    const fs = require('fs')
+    const path = require('path')
+    
+    const powerHooksPath = path.join(process.cwd(), 'power-hooks.json')
+    
+    if (fs.existsSync(powerHooksPath)) {
+      const powerHooksData = fs.readFileSync(powerHooksPath, 'utf8')
+      return JSON.parse(powerHooksData) as PowerHook[]
+    }
+    
+    // Fallback: If no power-hooks.json file exists, return empty array
+    return []
+  } catch (error) {
+    console.error('Error reading power hooks:', error)
+    return []
   }
 }
 

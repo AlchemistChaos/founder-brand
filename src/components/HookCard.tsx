@@ -27,6 +27,7 @@ export default function HookCard({
     if (!category) return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
     
     const colors: Record<string, string> = {
+      // Template Categories
       'Personal Story': 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
       'Curation': 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
       'Educational Breakdown': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
@@ -34,14 +35,42 @@ export default function HookCard({
       'Social Proof / Spotlight': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
       'Book-Based': 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200',
       'Insight & Prediction': 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200',
-      'Meta / Reflection on Writing': 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200'
+      'Meta / Reflection on Writing': 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200',
+      
+      // Power Hook Categories (vibrant colors for viral potential)
+      'Myth Busting': 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200',
+      'Controversial': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+      'Hidden Value': 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200',
+      'Transformation': 'bg-violet-100 text-violet-800 dark:bg-violet-900 dark:text-violet-200',
+      'Authority/Secrets': 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200',
+      'Harsh Truth': 'bg-rose-100 text-rose-800 dark:bg-rose-900 dark:text-rose-200',
+      'Achievement Path': 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200',
+      'Elite Insights': 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200',
+      'Anti-Guru': 'bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-200',
+      'Regret/Wisdom': 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
+      'Unbelievable Truth': 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200',
+      'Mistake Warning': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+      'Alternative Strategy': 'bg-lime-100 text-lime-800 dark:bg-lime-900 dark:text-lime-200',
+      'Correction': 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+      'Priority Correction': 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200',
+      'Mind Shift': 'bg-fuchsia-100 text-fuchsia-800 dark:bg-fuchsia-900 dark:text-fuchsia-200',
+      'Behavior Change': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+      'Fresh Start': 'bg-sky-100 text-sky-800 dark:bg-sky-900 dark:text-sky-200',
+      'Hidden Knowledge': 'bg-neutral-100 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200',
+      'Limiting Belief': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+      'Success Secrets': 'bg-gold-100 text-gold-800 dark:bg-gold-900 dark:text-gold-200',
+      'Dangerous Truth': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+      'Social Conditioning': 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200',
+      'Simple Success': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
     }
     
     return colors[category] || 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
   }
 
   const getTypeIcon = (type: string) => {
-    return type === 'custom' ? '✨' : '📝'
+    if (type === 'custom') return '✨'
+    if (type === 'power-hook') return '🔥'
+    return '📝'
   }
 
   const truncateText = (text: string, maxLength: number = 150) => {
@@ -85,7 +114,7 @@ export default function HookCard({
       <div className="flex items-center space-x-2 mb-3">
         <span className="text-lg">{getTypeIcon(hook.type)}</span>
         <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
-          {hook.type === 'custom' ? 'Creative' : 'Template'} • Variation {hook.variation}
+          {hook.type === 'custom' ? 'Creative' : hook.type === 'power-hook' ? 'Power Hook' : 'Template'} • Variation {hook.variation}
         </span>
         {hook.score && (
           <span className="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 px-2 py-1 rounded">
@@ -94,19 +123,38 @@ export default function HookCard({
         )}
       </div>
 
-      {/* Template Info */}
-      {showTemplateInfo && hook.templateTitle && hook.templateCategory && (
+      {/* Template/Power Hook Info */}
+      {showTemplateInfo && (
         <div className="mb-3">
-          <div className="flex items-center space-x-2">
-            <span
-              className={`text-xs px-2 py-1 rounded-full font-medium ${getCategoryColor(hook.templateCategory)}`}
-            >
-              {hook.templateCategory}
-            </span>
-          </div>
-          <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mt-1">
-            {hook.templateTitle}
-          </div>
+          {/* Power Hook Info */}
+          {hook.type === 'power-hook' && hook.powerHookCategory && (
+            <div className="flex items-center space-x-2">
+              <span
+                className={`text-xs px-2 py-1 rounded-full font-medium ${getCategoryColor(hook.powerHookCategory)}`}
+              >
+                {hook.powerHookCategory}
+              </span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                Viral Potential
+              </span>
+            </div>
+          )}
+          
+          {/* Template Info */}
+          {hook.type === 'template' && hook.templateTitle && hook.templateCategory && (
+            <>
+              <div className="flex items-center space-x-2">
+                <span
+                  className={`text-xs px-2 py-1 rounded-full font-medium ${getCategoryColor(hook.templateCategory)}`}
+                >
+                  {hook.templateCategory}
+                </span>
+              </div>
+              <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mt-1">
+                {hook.templateTitle}
+              </div>
+            </>
+          )}
         </div>
       )}
 
@@ -125,7 +173,7 @@ export default function HookCard({
             <div className="flex items-center space-x-2 mb-3">
               <span className="text-lg">{getTypeIcon(hook.type)}</span>
               <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
-                {hook.type === 'custom' ? 'Creative' : 'Template'} • Variation {hook.variation}
+                {hook.type === 'custom' ? 'Creative' : hook.type === 'power-hook' ? 'Power Hook' : 'Template'} • Variation {hook.variation}
               </span>
             </div>
             

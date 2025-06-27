@@ -1,0 +1,212 @@
+[
+  {
+    "id": "power-hook-1",
+    "text": "Everything you know about [topic] is wrong.",
+    "category": "Myth Busting",
+    "type": "subversive",
+    "variables": ["topic"]
+  },
+  {
+    "id": "power-hook-2", 
+    "text": "This is going to piss some people off, but it needs to be said.",
+    "category": "Controversial",
+    "type": "confrontational",
+    "variables": []
+  },
+  {
+    "id": "power-hook-3",
+    "text": "I wish someone had told me this when I started [journey].",
+    "category": "Regret/Wisdom",
+    "type": "personal",
+    "variables": ["journey"]
+  },
+  {
+    "id": "power-hook-4",
+    "text": "99% of people won't believe this, but it's true.",
+    "category": "Unbelievable Truth",
+    "type": "shocking",
+    "variables": []
+  },
+  {
+    "id": "power-hook-5",
+    "text": "You've been lied to about [conventional wisdom].",
+    "category": "Myth Busting",
+    "type": "subversive", 
+    "variables": ["conventional wisdom"]
+  },
+  {
+    "id": "power-hook-6",
+    "text": "Most advice on [topic] is garbage. Here's what actually works.",
+    "category": "Myth Busting",
+    "type": "subversive",
+    "variables": ["topic"]
+  },
+  {
+    "id": "power-hook-7",
+    "text": "[X] seems useless. But used correctly? It's a cheat code.",
+    "category": "Hidden Value",
+    "type": "revealing",
+    "variables": ["X"]
+  },
+  {
+    "id": "power-hook-8",
+    "text": "Here's a harsh truth no one wants to admit about [topic].",
+    "category": "Harsh Truth",
+    "type": "confrontational",
+    "variables": ["topic"]
+  },
+  {
+    "id": "power-hook-9",
+    "text": "The biggest mistake I see people make in [industry]? This one:",
+    "category": "Mistake Warning",
+    "type": "educational",
+    "variables": ["industry"]
+  },
+  {
+    "id": "power-hook-10",
+    "text": "I've studied [field] for [X] years. Here's what nobody talks about.",
+    "category": "Authority/Secrets",
+    "type": "revealing",
+    "variables": ["field", "X"]
+  },
+  {
+    "id": "power-hook-11",
+    "text": "If you want to [ambitious goal], stop doing this immediately:",
+    "category": "Achievement Path",
+    "type": "actionable",
+    "variables": ["ambitious goal"]
+  },
+  {
+    "id": "power-hook-12",
+    "text": "You don't need [popular strategy]. You need this instead.",
+    "category": "Alternative Strategy",
+    "type": "subversive",
+    "variables": ["popular strategy"]
+  },
+  {
+    "id": "power-hook-13",
+    "text": "You're doing [basic task] wrong. Here's how to fix it.",
+    "category": "Correction",
+    "type": "helpful",
+    "variables": ["basic task"]
+  },
+  {
+    "id": "power-hook-14",
+    "text": "Everyone chases [shiny object]. Here's what actually matters:",
+    "category": "Priority Correction",
+    "type": "refocusing",
+    "variables": ["shiny object"]
+  },
+  {
+    "id": "power-hook-15",
+    "text": "Let me show you how I went from [undesirable state] to [amazing result].",
+    "category": "Transformation",
+    "type": "personal",
+    "variables": ["undesirable state", "amazing result"]
+  },
+  {
+    "id": "power-hook-16",
+    "text": "10 things I wish I knew before I started [topic].",
+    "category": "Regret/Wisdom",
+    "type": "listicle",
+    "variables": ["topic"]
+  },
+  {
+    "id": "power-hook-17",
+    "text": "Want to [desirable outcome]? Ignore these 3 myths:",
+    "category": "Myth Busting",
+    "type": "actionable",
+    "variables": ["desirable outcome"]
+  },
+  {
+    "id": "power-hook-18",
+    "text": "This will change how you think about [topic] forever.",
+    "category": "Mind Shift",
+    "type": "transformative",
+    "variables": ["topic"]
+  },
+  {
+    "id": "power-hook-19",
+    "text": "Here's why I stopped [common behavior] — and why you should too.",
+    "category": "Behavior Change",
+    "type": "personal",
+    "variables": ["common behavior"]
+  },
+  {
+    "id": "power-hook-20",
+    "text": "If I were starting from scratch today, here's what I'd do.",
+    "category": "Fresh Start",
+    "type": "strategic",
+    "variables": []
+  },
+  {
+    "id": "power-hook-21",
+    "text": "What they don't teach you about [topic] in school:",
+    "category": "Hidden Knowledge",
+    "type": "educational",
+    "variables": ["topic"]
+  },
+  {
+    "id": "power-hook-22",
+    "text": "This one belief kept me poor for years.",
+    "category": "Limiting Belief",
+    "type": "personal",
+    "variables": []
+  },
+  {
+    "id": "power-hook-23",
+    "text": "The most underrated skill in [industry]? It's not what you think.",
+    "category": "Hidden Value",
+    "type": "surprising",
+    "variables": ["industry"]
+  },
+  {
+    "id": "power-hook-24",
+    "text": "How [successful figure] really made their fortune (not what you expect)",
+    "category": "Success Secrets",
+    "type": "revealing",
+    "variables": ["successful figure"]
+  },
+  {
+    "id": "power-hook-25",
+    "text": "[X] sounds boring. But it might be the most powerful tool you're ignoring.",
+    "category": "Hidden Value",
+    "type": "surprising",
+    "variables": ["X"]
+  },
+  {
+    "id": "power-hook-26",
+    "text": "The most dangerous lie in [industry] is also the most accepted one.",
+    "category": "Dangerous Truth",
+    "type": "confrontational",
+    "variables": ["industry"]
+  },
+  {
+    "id": "power-hook-27",
+    "text": "You've been conditioned to think [X] is normal. It's not.",
+    "category": "Social Conditioning",
+    "type": "awakening",
+    "variables": ["X"]
+  },
+  {
+    "id": "power-hook-28",
+    "text": "90% of success comes down to doing this one boring thing:",
+    "category": "Simple Success",
+    "type": "actionable",
+    "variables": []
+  },
+  {
+    "id": "power-hook-29",
+    "text": "I studied the top 1% in [field]. Here's what they all do differently.",
+    "category": "Elite Insights",
+    "type": "analytical",
+    "variables": ["field"]
+  },
+  {
+    "id": "power-hook-30",
+    "text": "You won't hear this from \"gurus,\" but here's the truth:",
+    "category": "Anti-Guru",
+    "type": "authentic",
+    "variables": []
+  }
+] 

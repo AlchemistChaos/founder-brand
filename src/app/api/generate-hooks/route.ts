@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import { GenerateHooksRequest, GenerateHooksResponse, Hook, ContentAnalysis, TemplateMatch } from '@/lib/types';
+import { GenerateHooksRequest, GenerateHooksResponse, Hook, ContentAnalysis, TemplateMatch, PowerHook, PowerHookMatch } from '@/lib/types';
 import fs from 'fs';
 import path from 'path';
-import { getToneExamples, getUserContexts, getGlobalRules } from '@/lib/supabase-client';
+import { getToneExamples, getUserContexts, getGlobalRules, getPowerHooks } from '@/lib/supabase-client';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY!,
@@ -245,6 +245,173 @@ function getTemplateMatches(content: string, limit: number = 10): TemplateMatch[
   return diversifiedMatches.slice(0, limit);
 }
 
+// Power Hook matching and scoring function 
+function getPowerHookMatches(content: string, analysis: ContentAnalysis, limit: number = 8): PowerHookMatch[] {
+  const powerHooks = []; // Will be loaded dynamically in the POST handler
+  const matches: PowerHookMatch[] = [];
+
+  // This function will be called with loaded power hooks in the POST handler
+  return matches;
+}
+
+// Power Hook matching implementation (called from POST handler with loaded data)
+function scorePowerHooks(powerHooks: PowerHook[], content: string, analysis: ContentAnalysis, limit: number = 8): PowerHookMatch[] {
+  const matches: PowerHookMatch[] = [];
+
+  for (const powerHook of powerHooks) {
+    let score = 0;
+    let reason = '';
+    const variableData: Record<string, string> = {};
+
+    // CONTENT-BASED VARIABLE EXTRACTION
+    // Extract variables from content for this power hook
+    for (const variable of powerHook.variables) {
+      switch (variable) {
+        case 'topic':
+          if (analysis.mainTopics.length > 0) {
+            variableData[variable] = analysis.mainTopics[0];
+            score += 15;
+          } else {
+            variableData[variable] = 'this';
+            score += 5;
+          }
+          break;
+        case 'industry':
+          // Extract industry from content or default
+          if (content.toLowerCase().includes('business')) variableData[variable] = 'business';
+          else if (content.toLowerCase().includes('tech')) variableData[variable] = 'tech';
+          else if (content.toLowerCase().includes('health')) variableData[variable] = 'health';
+          else variableData[variable] = 'your field';
+          score += 10;
+          break;
+        case 'field':
+          variableData[variable] = variableData['industry'] || 'your field';
+          score += 10;
+          break;
+        case 'X':
+          // Extract a key term from content
+          const keyTerms = content.match(/\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*\b/g) || [];
+          variableData[variable] = keyTerms[0] || 'this';
+          score += 8;
+          break;
+        case 'journey':
+          if (analysis.hasPersonalStory) {
+            variableData[variable] = analysis.mainTopics[0] || 'this journey';
+            score += 20;
+          } else {
+            variableData[variable] = 'this journey';
+            score += 5;
+          }
+          break;
+        default:
+          variableData[variable] = 'this';
+          score += 3;
+      }
+    }
+
+    // POWER HOOK CATEGORY SCORING (high base scores for viral potential)
+    const categoryScores = {
+      'Myth Busting': 85,
+      'Controversial': 90,
+      'Hidden Value': 80,
+      'Transformation': 75,
+      'Authority/Secrets': 85,
+      'Harsh Truth': 88,
+      'Achievement Path': 70,
+      'Elite Insights': 82,
+      'Anti-Guru': 78
+    };
+
+    score += categoryScores[powerHook.category as keyof typeof categoryScores] || 60;
+
+    // CONTENT MATCHING BONUSES
+    if (analysis.hasPersonalStory && ['Transformation', 'Regret/Wisdom', 'Behavior Change', 'Limiting Belief'].includes(powerHook.category)) {
+      score += 25;
+      reason += 'Perfect for personal story content. ';
+    }
+
+    if (analysis.tone === 'controversial' && ['Myth Busting', 'Controversial', 'Harsh Truth'].includes(powerHook.category)) {
+      score += 30;
+      reason += 'Matches controversial tone. ';
+    }
+
+    if (analysis.hasStatistics && ['Elite Insights', 'Simple Success', 'Achievement Path'].includes(powerHook.category)) {
+      score += 20;
+      reason += 'Great for data-driven content. ';
+    }
+
+    // POWER HOOK TYPE BONUSES (psychological triggers)
+    const typeScores = {
+      'subversive': 25,      // "Everything you know is wrong"
+      'confrontational': 30,  // "This will piss people off"
+      'shocking': 28,        // "99% won't believe this"
+      'revealing': 22,       // "Here's what nobody talks about"
+      'transformative': 20   // "This will change how you think"
+    };
+
+    score += typeScores[powerHook.type as keyof typeof typeScores] || 15;
+
+    // Add slight randomness for variety
+    score += Math.random() * 5;
+
+    if (score > 0) {
+      matches.push({
+        powerHook,
+        score,
+        reason: reason || `Viral potential: ${powerHook.category} hook`,
+        variableData
+      });
+    }
+  }
+
+  // CATEGORY DIVERSIFICATION for power hooks
+  const categoryGroups: { [category: string]: PowerHookMatch[] } = {};
+  
+  matches.forEach(match => {
+    const category = match.powerHook.category;
+    if (!categoryGroups[category]) {
+      categoryGroups[category] = [];
+    }
+    categoryGroups[category].push(match);
+  });
+  
+  // Sort each category by score
+  Object.keys(categoryGroups).forEach(category => {
+    categoryGroups[category].sort((a, b) => b.score - a.score);
+  });
+  
+  const diversifiedMatches: PowerHookMatch[] = [];
+  const maxPerCategory = 2; // Max 2 power hooks per category
+  
+  // First pass: Best from each category
+  Object.keys(categoryGroups).forEach(category => {
+    if (categoryGroups[category].length > 0 && diversifiedMatches.length < limit) {
+      diversifiedMatches.push(categoryGroups[category][0]);
+    }
+  });
+  
+  // Second pass: Second best from each category (if space)
+  if (diversifiedMatches.length < limit) {
+    Object.keys(categoryGroups).forEach(category => {
+      if (categoryGroups[category].length > 1 && diversifiedMatches.length < limit) {
+        diversifiedMatches.push(categoryGroups[category][1]);
+      }
+    });
+  }
+  
+  // Third pass: Fill remaining with highest scores
+  if (diversifiedMatches.length < limit) {
+    const remainingMatches = matches
+      .filter(match => !diversifiedMatches.includes(match))
+      .sort((a, b) => b.score - a.score);
+    
+    const slotsNeeded = limit - diversifiedMatches.length;
+    diversifiedMatches.push(...remainingMatches.slice(0, slotsNeeded));
+  }
+
+  return diversifiedMatches.slice(0, limit);
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { content, usePersonalContext } = await request.json();
@@ -253,52 +420,55 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Content is required' }, { status: 400 });
     }
 
-    // Fetch user data
-    const [personalContext, globalRules, toneExamples] = await Promise.all([
+    // Fetch user data AND power hooks
+    const [personalContext, globalRules, toneExamples, powerHooks] = await Promise.all([
       usePersonalContext ? getUserContexts() : Promise.resolve(''),
       getGlobalRules(),
-      getToneExamples()
+      getToneExamples(),
+      getPowerHooks()
     ]);
 
     // Analyze content
     const contentAnalysis = analyzeContent(content);
 
-    // Get template matches (limit to 8 since we want 8 template hooks + 2 custom)
-    const templateMatches = getTemplateMatches(content, 8);
+    // Get power hook matches (8 power hooks) and template matches (for supporting structure)
+    const powerHookMatches = scorePowerHooks(powerHooks, content, contentAnalysis, 8);
+    const templateMatches = getTemplateMatches(content, 5); // Fewer templates, used for supporting structure
 
     const hooks: Hook[] = [];
 
-    // Generate 8 template-based hooks (one variation each)
-    for (let i = 0; i < Math.min(8, templateMatches.length); i++) {
-      const templateMatch = templateMatches[i];
+    // Generate 8 POWER HOOK-based hooks (primary system)
+    for (let i = 0; i < Math.min(8, powerHookMatches.length); i++) {
+      const powerHookMatch = powerHookMatches[i];
       
       try {
-        const hookText = await generateTemplateHook({
-          template: templateMatch.template,
+        const hookText = await generatePowerHook({
+          powerHookMatch,
           content,
           contentAnalysis,
           personalContext,
           globalRules,
           toneExamples,
-          variation: 1 // Single variation per template
+          supportingTemplate: templateMatches[i % templateMatches.length]?.template, // Use templates for structure
+          variation: 1
         });
 
         hooks.push({
-          id: `template-${i + 1}`,
+          id: `power-hook-${i + 1}`,
           text: hookText,
-          type: 'template',
+          type: 'power-hook',
           variation: 1,
-          templateTitle: templateMatch.template.title,
-          templateCategory: templateMatch.template.category,
-          score: templateMatch.score
+          powerHookId: powerHookMatch.powerHook.id,
+          powerHookCategory: powerHookMatch.powerHook.category,
+          score: powerHookMatch.score
         });
       } catch (error) {
-        console.error(`Error generating template hook ${i + 1}:`, error);
+        console.error(`Error generating power hook ${i + 1}:`, error);
         // Continue with other hooks
       }
     }
 
-    // Generate 2 creative hooks
+    // Generate 2 creative hooks (backup/variety)
     for (let i = 1; i <= 2; i++) {
       try {
         const hookText = await generateCustomHook({
@@ -310,12 +480,12 @@ export async function POST(request: NextRequest) {
           variation: i as 1 | 2
         });
 
-                 hooks.push({
-           id: `custom-${i}`,
-           text: hookText,
-           type: 'custom',
-           variation: i as 1 | 2
-         });
+        hooks.push({
+          id: `custom-${i}`,
+          text: hookText,
+          type: 'custom',
+          variation: i as 1 | 2
+        });
       } catch (error) {
         console.error(`Error generating custom hook ${i}:`, error);
         // Continue with other hooks
@@ -324,7 +494,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       hooks,
-      topTemplates: templateMatches.slice(0, 8),
+      topTemplates: templateMatches.slice(0, 5), // Supporting templates
+      topPowerHooks: powerHookMatches.slice(0, 8), // Primary power hooks
       contentAnalysis
     });
 
@@ -522,6 +693,117 @@ IMPORTANT: Return ONLY the hook text, no quotes, no explanations, no additional 
     return hookText;
   } catch (error) {
     console.error('Error generating template hook:', error);
+    throw error;
+  }
+}
+
+// Generate power hook-based hook with maximum viral potential
+async function generatePowerHook({
+  powerHookMatch,
+  content,
+  contentAnalysis,
+  personalContext,
+  globalRules,
+  toneExamples,
+  supportingTemplate,
+  variation
+}: {
+  powerHookMatch: PowerHookMatch;
+  content: string;
+  contentAnalysis: ContentAnalysis;
+  personalContext?: string;
+  globalRules?: string;
+  toneExamples?: string;
+  supportingTemplate?: any;
+  variation: 1;
+}) {
+  const { powerHook, variableData } = powerHookMatch;
+  
+  const personalContextText = personalContext 
+    ? `\n\nPersonal Context: ${personalContext}`
+    : '';
+
+  const globalRulesText = globalRules 
+    ? `\n\nIMPORTANT GLOBAL RULES (MUST FOLLOW): ${globalRules}`
+    : '';
+
+  const toneExamplesText = toneExamples
+    ? `\n\nYOUR WRITING STYLE EXAMPLES (Match this tone and style exactly):
+${toneExamples}`
+    : '';
+
+  // Fill in variables in the power hook
+  let filledPowerHook = powerHook.text;
+  for (const [variable, value] of Object.entries(variableData)) {
+    filledPowerHook = filledPowerHook.replace(`[${variable}]`, value);
+  }
+
+  const supportingTemplateText = supportingTemplate 
+    ? `\n\nOptional Supporting Structure (use for inspiration if helpful):
+Template: ${supportingTemplate.template}
+Category: ${supportingTemplate.category}`
+    : '';
+
+  let prompt = `You are an expert viral Twitter hook writer. Create a powerful, attention-grabbing hook using this POWER HOOK as your foundation.
+
+POWER HOOK FOUNDATION: "${filledPowerHook}"
+Power Hook Category: ${powerHook.category}
+Power Hook Type: ${powerHook.type}
+
+Content to reference:
+${content}${personalContextText}${globalRulesText}${toneExamplesText}${supportingTemplateText}
+
+Content Analysis:
+- Tone: ${contentAnalysis.tone}
+- Has personal story: ${contentAnalysis.hasPersonalStory}
+- Has statistics: ${contentAnalysis.hasStatistics}
+- Main topics: ${contentAnalysis.mainTopics.join(', ')}
+
+CRITICAL REQUIREMENTS:
+1. CHARACTER LIMIT: Must be between 140-279 characters (aim for 220-260 for maximum engagement)
+2. USE THE POWER HOOK: Your hook MUST start with or be heavily based on the power hook foundation above
+3. VIRAL POTENTIAL: This needs to stop the scroll and create immediate curiosity
+4. CONTENT CONNECTION: Connect the power hook to the specific content provided
+
+TONE AND STYLE REQUIREMENTS:
+${toneExamples ? '- MATCH THE EXACT TONE AND STYLE from the provided examples above' : '- Use an engaging, conversational tone that matches the content'}
+- Write in the same voice, style, and personality as shown in the examples
+- Use similar sentence structure, vocabulary, and writing patterns
+- Maintain the same level of formality/informality as the examples
+
+POWER HOOK GUIDELINES:
+- ${powerHook.category} hooks should create ${powerHook.type === 'subversive' ? 'challenge conventional thinking' : powerHook.type === 'confrontational' ? 'bold, attention-grabbing statements' : powerHook.type === 'shocking' ? 'surprising revelations' : powerHook.type === 'revealing' ? 'insider knowledge sharing' : 'powerful emotional connection'}
+- Make it impossible to scroll past
+- Create immediate curiosity gap
+- Promise valuable insight or revelation
+
+Example approach: Start with the power hook, then add a brief teaser about what you'll reveal.
+
+IMPORTANT: Return ONLY the final hook text, no quotes, no explanations, no additional formatting.`;
+
+  try {
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-4',
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.75, // Balanced creativity for viral potential
+      max_tokens: 150,
+    });
+
+    const hookText = completion.choices[0]?.message?.content?.trim() || '';
+    
+    // Validate character count
+    if (hookText.length > 279) {
+      console.warn(`Generated power hook too long (${hookText.length} chars), truncating...`);
+      return hookText.substring(0, 276) + '...';
+    }
+    
+    if (hookText.length < 140) {
+      console.warn(`Generated power hook too short (${hookText.length} chars): ${hookText}`);
+    }
+
+    return hookText;
+  } catch (error) {
+    console.error('Error generating power hook:', error);
     throw error;
   }
 }
