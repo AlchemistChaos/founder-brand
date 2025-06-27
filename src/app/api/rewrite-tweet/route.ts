@@ -47,6 +47,14 @@ export async function POST(request: NextRequest) {
   try {
     const body: RewriteRequest = await request.json();
     const { selectedText, fullTweet, rewriteType, customPrompt, threadContext, personalContext, globalRules } = body;
+    
+    // Debug logging
+    console.log('🔍 Rewrite API called with:', {
+      selectedText: selectedText?.slice(0, 50),
+      rewriteType,
+      customPrompt: customPrompt ? `"${customPrompt}"` : 'none',
+      hasCustomPrompt: !!customPrompt
+    });
 
     // Validate input
     if (!selectedText || !selectedText.trim()) {

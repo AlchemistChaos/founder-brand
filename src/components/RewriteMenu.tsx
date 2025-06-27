@@ -15,6 +15,7 @@ interface RewriteMenuProps {
   selectedText: string
   onRewrite: (type: RewriteOption['id'], customPrompt?: string) => void
   onClose: () => void
+  onInteractionChange?: (isInteracting: boolean) => void
   isRewriting?: boolean
 }
 
@@ -57,6 +58,7 @@ export default function RewriteMenu({
   selectedText,
   onRewrite,
   onClose,
+  onInteractionChange,
   isRewriting = false
 }: RewriteMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null)
@@ -93,6 +95,7 @@ export default function RewriteMenu({
   const handleCustomPrompt = () => {
     if (!customPrompt.trim() || isRewriting) return
     
+    console.log('🎯 Custom prompt submitted:', customPrompt)
     setActiveOption('custom')
     onRewrite('rephrase', customPrompt)
     setCustomPrompt('')
@@ -155,16 +158,40 @@ export default function RewriteMenu({
 
       {/* Search/Custom prompt */}
       <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-600">
-        <input
-          ref={inputRef}
-          type="text"
-          value={customPrompt}
-          onChange={(e) => setCustomPrompt(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Search or type a custom prompt..."
-          className="w-full text-sm bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          disabled={isRewriting}
-        />
+        <div className="flex space-x-2">
+          <input
+            ref={inputRef}
+            type="text"
+            value={customPrompt}
+            onChange={(e) => setCustomPrompt(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onFocus={() => {
+              console.log('🔍 Input focused - preventing menu close')
+              onInteractionChange?.(true)
+            }}
+            onBlur={() => {
+              console.log('🔍 Input blurred - allowing menu close')
+              onInteractionChange?.(false)
+            }}
+            placeholder="Type a custom prompt..."
+            className="flex-1 text-sm bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            disabled={isRewriting}
+          />
+          {customPrompt.trim() && (
+            <button
+              onClick={handleCustomPrompt}
+              disabled={isRewriting}
+              className="px-3 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white text-sm rounded transition-colors"
+            >
+              ✨
+            </button>
+          )}
+        </div>
+        {customPrompt.trim() && (
+          <div className="text-xs text-blue-600 dark:text-blue-400 mt-2">
+            Press Enter or click ✨ to use custom prompt
+          </div>
+        )}
       </div>
 
       {/* Rewrite Options */}

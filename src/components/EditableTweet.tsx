@@ -38,6 +38,7 @@ export default function EditableTweet({
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 })
   const [selectedText, setSelectedText] = useState<TextSelection | null>(null)
   const [isLocalEditing, setIsLocalEditing] = useState(false)
+  const [isMenuInteracting, setIsMenuInteracting] = useState(false)
   
   const tweetRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -50,9 +51,14 @@ export default function EditableTweet({
   // Handle text selection
   const handleTextSelection = useCallback(() => {
     if (isLocalEditing) return // Don't show rewrite menu in edit mode
+    if (isMenuInteracting) {
+      console.log('🔒 Menu interaction in progress - preventing selection change handler')
+      return // Don't close menu when user is interacting with it
+    }
 
     const selection = window.getSelection()
     if (!selection || selection.rangeCount === 0) {
+      console.log('🔍 No text selection - closing menu')
       setShowRewriteMenu(false)
       setSelectedText(null)
       return
@@ -86,7 +92,7 @@ export default function EditableTweet({
     })
     setMenuPosition({ x: menuX, y: menuY })
     setShowRewriteMenu(true)
-  }, [isLocalEditing])
+  }, [isLocalEditing, isMenuInteracting])
 
   // Handle text selection events
   useEffect(() => {
@@ -105,23 +111,33 @@ export default function EditableTweet({
   const handleRewrite = async (rewriteType: RewriteOption['id'], customPrompt?: string) => {
     if (!selectedText || isRewriting) return
 
+    console.log('📝 EditableTweet handleRewrite called with:', {
+      rewriteType,
+      customPrompt: customPrompt ? `"${customPrompt}"` : 'none',
+      selectedText: selectedText.text?.slice(0, 30)
+    })
+
     setIsRewriting(true)
 
     try {
+      const requestBody = {
+        selectedText: selectedText.text,
+        fullTweet: currentText,
+        rewriteType,
+        customPrompt,
+        threadContext,
+        personalContext,
+        globalRules
+      }
+      
+      console.log('📤 Sending request to API:', { ...requestBody, customPrompt: customPrompt ? `"${customPrompt}"` : 'none' })
+
       const response = await fetch('/api/rewrite-tweet', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          selectedText: selectedText.text,
-          fullTweet: currentText,
-          rewriteType,
-          customPrompt,
-          threadContext,
-          personalContext,
-          globalRules
-        }),
+        body: JSON.stringify(requestBody),
       })
 
       const data = await response.json()
@@ -274,8 +290,10 @@ export default function EditableTweet({
         onClose={() => {
           setShowRewriteMenu(false)
           setSelectedText(null)
+          setIsMenuInteracting(false)
           window.getSelection()?.removeAllRanges()
         }}
+        onInteractionChange={setIsMenuInteracting}
         isRewriting={isRewriting}
       />
     </div>
