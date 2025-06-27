@@ -1,44 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
+import { RewriteRequest, RewriteResponse } from '@/lib/types';
+import { getToneExamples, getUserContexts, getGlobalRules } from '@/lib/supabase-client';
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!,
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
-export interface RewriteRequest {
-  selectedText: string;
-  fullTweet: string;
-  rewriteType: 'grammar' | 'improve' | 'punchy' | 'condense' | 'rephrase';
-  customPrompt?: string; // Custom instruction for rewriting
-  threadContext?: string[]; // Other tweets in the thread for context
-  personalContext?: string;
-  globalRules?: string;
-}
-
-export interface RewriteResponse {
-  rewrittenText: string;
-  originalText: string;
-}
-
-const REWRITE_PROMPTS = {
+const rewriteOptions = {
   grammar: {
     instruction: "Fix grammar and spelling errors while maintaining the original meaning and tone",
     temperature: 0.3
   },
   improve: {
-    instruction: "Improve the writing quality, clarity, and flow while maintaining the original message",
+    instruction: "Improve clarity, flow, and engagement while keeping the same meaning",
     temperature: 0.5
   },
   punchy: {
-    instruction: "Make the text more punchy, engaging, and impactful while keeping the core message",
+    instruction: "Make more punchy, impactful, and attention-grabbing",
     temperature: 0.7
   },
   condense: {
-    instruction: "Condense the text to be more concise while preserving all key information",
+    instruction: "Make more concise while preserving key information and impact",
     temperature: 0.4
   },
   rephrase: {
-    instruction: "Rephrase the text with a fresh perspective while maintaining the same meaning",
+    instruction: "Rephrase completely while maintaining the same meaning and intent",
     temperature: 0.8
   }
 };
@@ -48,170 +35,140 @@ export async function POST(request: NextRequest) {
     const body: RewriteRequest = await request.json();
     const { selectedText, fullTweet, rewriteType, customPrompt, threadContext, personalContext, globalRules } = body;
     
-    // Debug logging
-    console.log('🔍 Rewrite API called with:', {
-      selectedText: selectedText?.slice(0, 50),
-      rewriteType,
-      customPrompt: customPrompt ? `"${customPrompt}"` : 'none',
-      hasCustomPrompt: !!customPrompt
-    });
-
-    // Validate input
-    if (!selectedText || !selectedText.trim()) {
+    if (!selectedText || !fullTweet || !rewriteType) {
       return NextResponse.json(
-        { error: 'Selected text is required' },
+        { error: 'Missing required fields: selectedText, fullTweet, rewriteType' },
         { status: 400 }
       );
     }
 
-    if (!fullTweet || !fullTweet.trim()) {
-      return NextResponse.json(
-        { error: 'Full tweet context is required' },
-        { status: 400 }
-      );
-    }
-
-    if (!customPrompt && !REWRITE_PROMPTS[rewriteType]) {
+    if (!rewriteOptions[rewriteType] && !customPrompt) {
       return NextResponse.json(
         { error: 'Invalid rewrite type' },
         { status: 400 }
       );
     }
 
-    // Check for OpenAI API key
-    if (!process.env.OPENAI_API_KEY) {
-      return NextResponse.json(
-        { error: 'OpenAI API key is not configured' },
-        { status: 500 }
-      );
-    }
+    // Fetch tone examples for style matching
+    const [userContexts, userGlobalRules, toneExamples] = await Promise.all([
+      personalContext ? getUserContexts() : Promise.resolve(''),
+      globalRules ? getGlobalRules() : Promise.resolve(''),
+      getToneExamples()
+    ]);
 
-    // Use custom prompt or default rewrite config
-    const rewriteConfig = customPrompt 
-      ? { instruction: customPrompt, temperature: 0.7 }
-      : REWRITE_PROMPTS[rewriteType];
-    
-    // Build context for the rewrite
-    const threadContextText = threadContext && threadContext.length > 0
-      ? `\n\nThread Context (other tweets):\n${threadContext.join('\n')}`
-      : '';
-
-    const personalContextText = personalContext
-      ? `\n\nPersonal Context: ${personalContext}`
-      : '';
-
-    const globalRulesText = globalRules
-      ? `\n\nIMPORTANT GLOBAL RULES: ${globalRules}`
-      : '';
-
-    // Calculate character budget for the rewrite
-    const beforeText = fullTweet.substring(0, fullTweet.indexOf(selectedText));
-    const afterText = fullTweet.substring(fullTweet.indexOf(selectedText) + selectedText.length);
-    const maxRewriteLength = 280 - beforeText.length - afterText.length;
-
-    const systemPrompt = `You are an expert Twitter content editor. Your task is to ${rewriteConfig.instruction}.
-
-CRITICAL REQUIREMENTS:
-- Only rewrite the selected portion of text
-- Maintain consistency with the rest of the tweet
-- The rewritten text MUST be ${maxRewriteLength} characters or fewer (current full tweet is ${fullTweet.length} chars)
-- Preserve the original tone and voice
-- Ensure the rewritten portion flows naturally with surrounding text
-- TWITTER LIMIT: Final tweet must stay under 280 characters total
-- Use emojis sparingly and only if they were in the original or improve engagement${personalContextText}${globalRulesText}
-
-Return ONLY the rewritten portion of text, nothing else.`;
-
-    const userPrompt = `Full Tweet Context:
-"${fullTweet}"
-
-Selected Text to Rewrite:
-"${selectedText}"
-
-Task: ${rewriteConfig.instruction}${threadContextText}
-
-Rewrite only the selected portion:`;
-
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt }
-      ],
-      temperature: rewriteConfig.temperature,
-      max_tokens: 200,
+    const rewrittenText = await rewriteText({
+      selectedText,
+      fullTweet,
+      rewriteType,
+      customPrompt,
+      threadContext,
+      personalContext: userContexts,
+      globalRules: userGlobalRules,
+      toneExamples
     });
 
-    const rewrittenText = response.choices[0].message.content?.trim();
-
-    if (!rewrittenText) {
-      return NextResponse.json(
-        { error: 'No rewrite generated' },
-        { status: 500 }
-      );
-    }
-
-    // Remove quotes if the AI added them
-    let cleanedRewrite = rewrittenText.replace(/^["']|["']$/g, '');
-
-    // Check character limit after replacement  
-    const projectedLength = beforeText.length + cleanedRewrite.length + afterText.length;
-
-    console.log('📏 Character limit check:', {
-      originalLength: fullTweet.length,
-      selectedTextLength: selectedText.length,
-      rewrittenLength: cleanedRewrite.length,
-      projectedLength,
-      withinLimit: projectedLength <= 280
-    });
-
-    // If the rewritten text would make the tweet too long, ask for a shorter version
-    if (projectedLength > 280) {
-      console.log(`⚠️ Tweet would be ${projectedLength} chars, requesting shorter version (max ${maxRewriteLength} chars)`);
-
-      const shorterPrompt = `Full Tweet Context:
-"${fullTweet}"
-
-Selected Text to Rewrite:
-"${selectedText}"
-
-Task: ${rewriteConfig.instruction}
-
-CRITICAL: The rewritten text must be ${maxRewriteLength} characters or fewer to keep the total tweet under 280 characters.
-Current projected length would be ${projectedLength} characters, which is too long.
-
-Rewrite only the selected portion with maximum ${maxRewriteLength} characters:`;
-
-      const shorterResponse = await openai.chat.completions.create({
-        model: 'gpt-4',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: shorterPrompt }
-        ],
-        temperature: rewriteConfig.temperature,
-        max_tokens: Math.min(200, Math.ceil(maxRewriteLength * 1.5)), // Conservative token limit
-      });
-
-      const shorterRewrite = shorterResponse.choices[0].message.content?.trim();
-      if (shorterRewrite) {
-        cleanedRewrite = shorterRewrite.replace(/^["']|["']$/g, '');
-        const finalLength = beforeText.length + cleanedRewrite.length + afterText.length;
-        console.log(`✅ Shorter version generated: ${cleanedRewrite.length} chars, final tweet: ${finalLength} chars`);
-      }
-    }
-
-    const result: RewriteResponse = {
-      rewrittenText: cleanedRewrite,
+    const response: RewriteResponse = {
+      rewrittenText,
       originalText: selectedText
     };
 
-    return NextResponse.json(result);
+    return NextResponse.json(response);
 
   } catch (error) {
-    console.error('Tweet rewrite error:', error);
+    console.error('Rewrite error:', error);
     return NextResponse.json(
-      { error: 'Failed to rewrite tweet portion' },
+      { error: 'Failed to rewrite text. Please try again.' },
       { status: 500 }
     );
+  }
+}
+
+async function rewriteText({
+  selectedText,
+  fullTweet,
+  rewriteType,
+  customPrompt,
+  threadContext,
+  personalContext,
+  globalRules,
+  toneExamples
+}: {
+  selectedText: string;
+  fullTweet: string;
+  rewriteType: string;
+  customPrompt?: string;
+  threadContext?: string[];
+  personalContext?: string;
+  globalRules?: string;
+  toneExamples?: string;
+}): Promise<string> {
+  const contextText = threadContext && threadContext.length > 0
+    ? `\n\nThread Context:\n${threadContext.join('\n')}`
+    : '';
+
+  const personalContextText = personalContext 
+    ? `\n\nPersonal Context: ${personalContext}`
+    : '';
+
+  const globalRulesText = globalRules 
+    ? `\n\nIMPORTANT GLOBAL RULES (MUST FOLLOW): ${globalRules}`
+    : '';
+
+  const toneExamplesText = toneExamples
+    ? `\n\nYOUR WRITING STYLE EXAMPLES (Match this tone and style exactly):
+${toneExamples}`
+    : '';
+
+  const option = rewriteOptions[rewriteType as keyof typeof rewriteOptions];
+  const instruction = customPrompt || option?.instruction || 'Rewrite the text';
+
+  const prompt = `You are an expert copywriter. Your task is to rewrite ONLY the selected portion of text according to the given instructions.
+
+Full Tweet:
+"${fullTweet}"
+
+Selected Text to Rewrite:
+"${selectedText}"
+
+Rewrite Instructions:
+${instruction}${contextText}${personalContextText}${globalRulesText}${toneExamplesText}
+
+CRITICAL REQUIREMENTS:
+- Rewrite ONLY the selected text portion, not the entire tweet
+- The rewritten text must fit naturally within the full tweet context
+- Preserve the original tone and voice
+${toneExamples ? '- MATCH THE EXACT TONE AND STYLE from the provided examples above' : ''}
+- Keep character count reasonable for Twitter (aim to maintain similar length)
+- Make sure the result flows naturally with the rest of the tweet
+
+TONE AND STYLE REQUIREMENTS:
+${toneExamples ? '- Write in the same voice, style, and personality as shown in the examples' : '- Maintain the original style and voice'}
+- Use similar sentence structure, vocabulary, and writing patterns
+- Maintain the same level of formality/informality as the examples
+- If examples are casual, be casual. If examples are professional, be professional.
+
+IMPORTANT: Return ONLY the rewritten selected text, no quotes, no explanations, no additional formatting.`
+
+  try {
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-4',
+      messages: [{ role: 'user', content: prompt }],
+      temperature: option?.temperature || 0.6,
+      max_tokens: 150,
+    });
+
+    const result = completion.choices[0]?.message?.content?.trim() || selectedText;
+    
+    // Simple validation to ensure we got a reasonable result
+    if (result.length === 0 || result.length > selectedText.length * 3) {
+      console.warn('Rewrite result seems invalid, returning original');
+      return selectedText;
+    }
+
+    return result;
+
+  } catch (error) {
+    console.error('Error in OpenAI rewrite:', error);
+    throw error;
   }
 } 

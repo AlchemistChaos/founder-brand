@@ -171,11 +171,9 @@ export default function Home() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          hooks: selectedHooks,
           content,
-          selectedHookIds,
-          selectedHooks,
-          personalContext: usePersonalContext ? await getPersonalContext() : undefined,
-          globalRules: await getGlobalRules(),
+          usePersonalContext,
           customPromptId: customPromptId || undefined,
         }),
       })

@@ -3,6 +3,7 @@ import OpenAI from 'openai';
 import { GenerateHooksRequest, GenerateHooksResponse, Hook, ContentAnalysis, TemplateMatch } from '@/lib/types';
 import fs from 'fs';
 import path from 'path';
+import { getToneExamples, getUserContexts, getGlobalRules } from '@/lib/supabase-client';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY!,
@@ -193,223 +194,147 @@ function getTemplateMatches(content: string, limit: number = 10): TemplateMatch[
     }
   }
 
-  return matches
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit);
+  // CATEGORY DIVERSIFICATION: Ensure variety across different hook types
+  const categoryGroups: { [category: string]: TemplateMatch[] } = {};
+  
+  // Group matches by category
+  matches.forEach(match => {
+    const category = match.template.category;
+    if (!categoryGroups[category]) {
+      categoryGroups[category] = [];
+    }
+    categoryGroups[category].push(match);
+  });
+  
+  // Sort each category group by score
+  Object.keys(categoryGroups).forEach(category => {
+    categoryGroups[category].sort((a, b) => b.score - a.score);
+  });
+  
+  const diversifiedMatches: TemplateMatch[] = [];
+  const maxPerCategory = 2; // Maximum 2 templates per category
+  
+  // First pass: Take the best template from each category
+  const usedCategories = new Set<string>();
+  Object.keys(categoryGroups).forEach(category => {
+    if (diversifiedMatches.length < limit && categoryGroups[category].length > 0) {
+      diversifiedMatches.push(categoryGroups[category][0]);
+      usedCategories.add(category);
+    }
+  });
+  
+  // Second pass: Fill remaining slots with second-best from each category
+  if (diversifiedMatches.length < limit) {
+    Object.keys(categoryGroups).forEach(category => {
+      if (diversifiedMatches.length < limit && categoryGroups[category].length > 1) {
+        diversifiedMatches.push(categoryGroups[category][1]);
+      }
+    });
+  }
+  
+  // Third pass: If still need more, take remaining highest-scoring across all categories
+  if (diversifiedMatches.length < limit) {
+    const remainingMatches = matches
+      .filter(match => !diversifiedMatches.includes(match))
+      .sort((a, b) => b.score - a.score);
+    
+    const slotsNeeded = limit - diversifiedMatches.length;
+    diversifiedMatches.push(...remainingMatches.slice(0, slotsNeeded));
+  }
+  
+  return diversifiedMatches.slice(0, limit);
 }
-
-
 
 export async function POST(request: NextRequest) {
   try {
-    const body: GenerateHooksRequest = await request.json();
-    const { content, personalContext, globalRules } = body;
+    const { content, usePersonalContext } = await request.json();
 
-    // Validate input
-    if (!content || content.trim().length < 10) {
-      return NextResponse.json(
-        { error: 'Content is required and must be at least 10 characters' },
-        { status: 400 }
-      );
+    if (!content || content.trim().length === 0) {
+      return NextResponse.json({ error: 'Content is required' }, { status: 400 });
     }
 
-    if (content.length > 10000) {
-      return NextResponse.json(
-        { error: 'Content must be less than 10,000 characters' },
-        { status: 400 }
-      );
-    }
+    // Fetch user data
+    const [personalContext, globalRules, toneExamples] = await Promise.all([
+      usePersonalContext ? getUserContexts() : Promise.resolve(''),
+      getGlobalRules(),
+      getToneExamples()
+    ]);
 
-    // Step 1: Analyze content and get top 10 templates
-    console.log('Analyzing content and scoring templates...');
+    // Analyze content
     const contentAnalysis = analyzeContent(content);
-    const templateMatches = getTemplateMatches(content, 10);
 
-    if (templateMatches.length === 0) {
-      return NextResponse.json(
-        { error: 'No suitable templates found for this content' },
-        { status: 400 }
-      );
-    }
+    // Get template matches (limit to 8 since we want 8 template hooks + 2 custom)
+    const templateMatches = getTemplateMatches(content, 8);
 
-    console.log(`Found ${templateMatches.length} template matches`);
+    const hooks: Hook[] = [];
 
-    // Step 2: Generate hooks from top 8 templates (1 variation each = 8 hooks)
-    const templateHooks: Hook[] = [];
-    
+    // Generate 8 template-based hooks (one variation each)
     for (let i = 0; i < Math.min(8, templateMatches.length); i++) {
-      const match = templateMatches[i];
-      const template = match.template;
+      const templateMatch = templateMatches[i];
       
       try {
-        const hook = await generateTemplateHook({
-          content,
-          template,
-          personalContext,
-          globalRules,
-          variation: 1
-        });
-        
-        templateHooks.push({
-          id: `template-${template.id}`,
-          text: hook,
-          templateId: template.id,
-          templateTitle: template.title,
-          templateCategory: template.category,
-          variation: 1,
-          type: 'template',
-          score: match.score
-        });
-      } catch (error) {
-        console.error(`Failed to generate hook for template ${template.id}:`, error);
-        // Continue with other templates even if one fails
-      }
-    }
-
-    // Step 3: Generate 2 custom creative hooks
-    const customHooks: Hook[] = [];
-    
-    for (let variation = 1; variation <= 2; variation++) {
-      try {
-        const hook = await generateCustomHook({
+        const hookText = await generateTemplateHook({
+          template: templateMatch.template,
           content,
           contentAnalysis,
           personalContext,
           globalRules,
-          variation: variation as 1 | 2
+          toneExamples,
+          variation: 1 // Single variation per template
         });
-        
-        customHooks.push({
-          id: `custom-v${variation}`,
-          text: hook,
-          variation: variation as 1 | 2,
-          type: 'custom'
+
+        hooks.push({
+          id: `template-${i + 1}`,
+          text: hookText,
+          type: 'template',
+          variation: 1,
+          templateTitle: templateMatch.template.title,
+          templateCategory: templateMatch.template.category,
+          score: templateMatch.score
         });
       } catch (error) {
-        console.error(`Failed to generate custom hook variation ${variation}:`, error);
+        console.error(`Error generating template hook ${i + 1}:`, error);
+        // Continue with other hooks
       }
     }
 
-    // Combine all hooks
-    const allHooks = [...templateHooks, ...customHooks];
+    // Generate 2 creative hooks
+    for (let i = 1; i <= 2; i++) {
+      try {
+        const hookText = await generateCustomHook({
+          content,
+          contentAnalysis,
+          personalContext,
+          globalRules,
+          toneExamples,
+          variation: i as 1 | 2
+        });
 
-    if (allHooks.length === 0) {
-      return NextResponse.json(
-        { error: 'Failed to generate any hooks' },
-        { status: 500 }
-      );
+                 hooks.push({
+           id: `custom-${i}`,
+           text: hookText,
+           type: 'custom',
+           variation: i as 1 | 2
+         });
+      } catch (error) {
+        console.error(`Error generating custom hook ${i}:`, error);
+        // Continue with other hooks
+      }
     }
 
-    const response: GenerateHooksResponse = {
-      hooks: allHooks.slice(0, 10), // Ensure max 10 hooks
-      topTemplates: templateMatches,
+    return NextResponse.json({
+      hooks,
+      topTemplates: templateMatches.slice(0, 8),
       contentAnalysis
-    };
-
-    return NextResponse.json(response);
+    });
 
   } catch (error) {
     console.error('Hook generation error:', error);
     return NextResponse.json(
-      { error: 'Failed to generate hooks' },
+      { error: 'Failed to generate hooks. Please try again.' },
       { status: 500 }
     );
   }
-}
-
-// Generate hook from template with character optimization
-async function generateTemplateHook({
-  content,
-  template,
-  personalContext,
-  globalRules,
-  variation
-}: {
-  content: string;
-  template: any;
-  personalContext?: string;
-  globalRules?: string;
-  variation: 1;
-}) {
-  const personalContextText = personalContext 
-    ? `\n\nPersonal Context: ${personalContext}`
-    : '';
-
-  const globalRulesText = globalRules 
-    ? `\n\nIMPORTANT GLOBAL RULES (MUST FOLLOW): ${globalRules}`
-    : '';
-
-  let prompt = `You are an expert Twitter thread writer. Generate a compelling hook (opening tweet) based on this template and content.
-
-Template: ${template.title}
-Template Category: ${template.category}
-Template Structure: ${template.template.split('\n').slice(0, 3).join('\n')}...
-
-Content to base hook on:
-${content}${personalContextText}${globalRulesText}
-
-PLACEHOLDER INSTRUCTIONS:
-- Replace [X] with relevant numbers from the content (e.g., if content mentions "154 students", use 154)
-- Replace [Topic], [Skill], [Niche] with the main subject from the content
-- Replace [TimePeriod] with relevant timeframes mentioned (e.g., "8 weeks", "6 months")
-- If specific numbers/details aren't in content, use realistic, engaging alternatives
-- Ignore publication dates and author bylines when extracting numbers
-
-CRITICAL CHARACTER REQUIREMENTS:
-- The hook must be between 140-279 characters (aim for 200-260 for optimal engagement)
-- Count characters carefully including spaces and punctuation
-- If the hook approaches 280 characters, make it more concise
-- Never exceed 279 characters under any circumstances
-
-The hook should:
-- Be maximally engaging and attention-grabbing
-- Follow the template's opening style and psychological triggers
-- Use extracted data from the content where appropriate
-- Be exactly 1 tweet (never multiple tweets)
-- Include relevant emojis sparingly (max 2-3) if they enhance engagement
-- Create curiosity, urgency, or strong emotional response
-- Match the template category's proven engagement patterns
-
-Generate only the hook text, no explanations. Optimize for maximum virality within the character limit:`;
-
-  let attempts = 0;
-  const maxAttempts = 3;
-
-  while (attempts < maxAttempts) {
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4',
-      messages: [{ role: 'user', content: prompt }],
-      max_tokens: 150,
-      temperature: 0.7,
-    });
-
-    const hookText = response.choices[0]?.message?.content?.trim() || '';
-    
-    // Validate character length
-    if (hookText.length >= 140 && hookText.length <= 279) {
-      return hookText;
-    }
-    
-    // If too long or too short, retry with adjustment
-    attempts++;
-    if (attempts < maxAttempts) {
-      const adjustment = hookText.length > 279 
-        ? `The previous hook was ${hookText.length} characters, which is too long. Make it more concise while keeping the impact.`
-        : `The previous hook was ${hookText.length} characters, which is too short. Add more compelling details while staying under 279 characters.`;
-      
-      prompt += `\n\nADJUSTMENT NEEDED: ${adjustment}`;
-    }
-  }
-
-  // If all attempts failed, return the last attempt (better than nothing)
-  const fallbackResponse = await openai.chat.completions.create({
-    model: 'gpt-4',
-    messages: [{ role: 'user', content: prompt }],
-    max_tokens: 100,
-    temperature: 0.3,
-  });
-
-  return fallbackResponse.choices[0]?.message?.content?.trim() || '';
 }
 
 // Generate custom creative hook with character optimization
@@ -418,12 +343,14 @@ async function generateCustomHook({
   contentAnalysis,
   personalContext,
   globalRules,
+  toneExamples,
   variation
 }: {
   content: string;
   contentAnalysis: ContentAnalysis;
   personalContext?: string;
   globalRules?: string;
+  toneExamples?: string;
   variation: 1 | 2;
 }) {
   const personalContextText = personalContext 
@@ -434,6 +361,11 @@ async function generateCustomHook({
     ? `\n\nIMPORTANT GLOBAL RULES (MUST FOLLOW): ${globalRules}`
     : '';
 
+  const toneExamplesText = toneExamples
+    ? `\n\nYOUR WRITING STYLE EXAMPLES (Match this tone and style exactly):
+${toneExamples}`
+    : '';
+
   const toneVariation = variation === 1
     ? "Create a bold, attention-grabbing hook with maximum viral potential."
     : "Create a more conversational, relatable hook that creates strong emotional connection.";
@@ -441,7 +373,7 @@ async function generateCustomHook({
   let prompt = `You are an expert Twitter thread writer. Create a completely original, creative hook (opening tweet) for this content.
 
 Content:
-${content}${personalContextText}${globalRulesText}
+${content}${personalContextText}${globalRulesText}${toneExamplesText}
 
 Content Analysis:
 - Tone: ${contentAnalysis.tone}
@@ -456,56 +388,140 @@ CRITICAL CHARACTER REQUIREMENTS:
 - If the hook approaches 280 characters, make it more concise
 - Never exceed 279 characters under any circumstances
 
+TONE AND STYLE REQUIREMENTS:
+${toneExamples ? '- MATCH THE EXACT TONE AND STYLE from the provided examples above' : '- Use an engaging, conversational tone that matches the content'}
+- Write in the same voice, style, and personality as shown in the examples
+- Use similar sentence structure, vocabulary, and writing patterns
+- Maintain the same level of formality/informality as the examples
+- If examples are casual, be casual. If examples are professional, be professional.
+
 Instructions:
 ${toneVariation}
 
-The hook should:
-- Be completely original and creative (avoid template patterns)
-- Capture the essence of the content with maximum impact
-- Use psychological triggers: curiosity, controversy, surprise, emotion
-- Be exactly 1 tweet (never multiple tweets)
-- Include relevant emojis sparingly (max 2-3) if they enhance engagement
-- Stand out from typical template-based hooks
-- Create an irresistible urge to read the full thread
+Think viral potential: What would make someone STOP scrolling and want to read more?
 
-Generate only the hook text, no explanations. Optimize for maximum virality within the character limit:`;
+IMPORTANT: Return ONLY the hook text, no quotes, no explanations, no additional formatting.`;
 
-  let attempts = 0;
-  const maxAttempts = 3;
-
-  while (attempts < maxAttempts) {
-    const response = await openai.chat.completions.create({
+  try {
+    const completion = await openai.chat.completions.create({
       model: 'gpt-4',
       messages: [{ role: 'user', content: prompt }],
+      temperature: 0.8,
       max_tokens: 150,
-      temperature: variation === 1 ? 0.8 : 1.0,
     });
 
-    const hookText = response.choices[0]?.message?.content?.trim() || '';
+    const hookText = completion.choices[0]?.message?.content?.trim() || '';
     
-    // Validate character length
-    if (hookText.length >= 140 && hookText.length <= 279) {
-      return hookText;
+    // Validate character count
+    if (hookText.length > 279) {
+      console.warn(`Generated hook too long (${hookText.length} chars), truncating...`);
+      return hookText.substring(0, 276) + '...';
     }
     
-    // If too long or too short, retry with adjustment
-    attempts++;
-    if (attempts < maxAttempts) {
-      const adjustment = hookText.length > 279 
-        ? `The previous hook was ${hookText.length} characters, which is too long. Make it more concise while keeping the viral impact.`
-        : `The previous hook was ${hookText.length} characters, which is too short. Add more compelling details while staying under 279 characters.`;
-      
-      prompt += `\n\nADJUSTMENT NEEDED: ${adjustment}`;
+    if (hookText.length < 140) {
+      console.warn(`Generated hook too short (${hookText.length} chars): ${hookText}`);
     }
+
+    return hookText;
+  } catch (error) {
+    console.error('Error generating custom hook:', error);
+    throw error;
   }
+}
 
-  // If all attempts failed, return the last attempt
-  const fallbackResponse = await openai.chat.completions.create({
-    model: 'gpt-4',
-    messages: [{ role: 'user', content: prompt }],
-    max_tokens: 100,
-    temperature: 0.5,
-  });
+// Generate template-based hook with character optimization
+async function generateTemplateHook({
+  template,
+  content,
+  contentAnalysis,
+  personalContext,
+  globalRules,
+  toneExamples,
+  variation
+}: {
+  template: any;
+  content: string;
+  contentAnalysis: ContentAnalysis;
+  personalContext?: string;
+  globalRules?: string;
+  toneExamples?: string;
+  variation: 1 | 2;
+}) {
+  const personalContextText = personalContext 
+    ? `\n\nPersonal Context: ${personalContext}`
+    : '';
 
-  return fallbackResponse.choices[0]?.message?.content?.trim() || '';
+  const globalRulesText = globalRules 
+    ? `\n\nIMPORTANT GLOBAL RULES (MUST FOLLOW): ${globalRules}`
+    : '';
+
+  const toneExamplesText = toneExamples
+    ? `\n\nYOUR WRITING STYLE EXAMPLES (Match this tone and style exactly):
+${toneExamples}`
+    : '';
+
+  const variationText = variation === 1 
+    ? "First variation: Focus on maximum impact and viral potential."
+    : "Second variation: Focus on being more relatable and conversational.";
+
+  let prompt = `You are an expert Twitter thread writer. Use this template to create a hook (opening tweet) for the given content.
+
+Template: ${template.template}
+Template Category: ${template.category}
+Template Summary: ${template.summary}
+
+Content to adapt:
+${content}${personalContextText}${globalRulesText}${toneExamplesText}
+
+Content Analysis:
+- Tone: ${contentAnalysis.tone}
+- Has personal story: ${contentAnalysis.hasPersonalStory}
+- Has statistics: ${contentAnalysis.hasStatistics}
+- Main topics: ${contentAnalysis.mainTopics.join(', ')}
+
+CRITICAL CHARACTER REQUIREMENTS:
+- The hook must be between 140-279 characters (aim for 200-260 for optimal engagement)
+- Count characters carefully including spaces and punctuation
+- If the hook approaches 280 characters, make it more concise
+- Never exceed 279 characters under any circumstances
+
+TONE AND STYLE REQUIREMENTS:
+${toneExamples ? '- MATCH THE EXACT TONE AND STYLE from the provided examples above' : '- Use an engaging, conversational tone that matches the content'}
+- Write in the same voice, style, and personality as shown in the examples
+- Use similar sentence structure, vocabulary, and writing patterns
+- Maintain the same level of formality/informality as the examples
+- If examples are casual, be casual. If examples are professional, be professional.
+
+Instructions:
+${variationText}
+
+Adapt the template creatively to fit your content. Replace placeholders like [Topic], [Number], [Outcome] etc. with specific details from your content.
+
+IMPORTANT: Return ONLY the hook text, no quotes, no explanations, no additional formatting.`;
+
+  try {
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-4',
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.7,
+      max_tokens: 150,
+    });
+
+    const hookText = completion.choices[0]?.message?.content?.trim() || '';
+    
+    // Validate character count
+    if (hookText.length > 279) {
+      console.warn(`Generated hook too long (${hookText.length} chars), truncating...`);
+      return hookText.substring(0, 276) + '...';
+    }
+    
+    if (hookText.length < 140) {
+      console.warn(`Generated hook too short (${hookText.length} chars): ${hookText}`);
+    }
+
+    return hookText;
+  } catch (error) {
+    console.error('Error generating template hook:', error);
+    throw error;
+  }
 }

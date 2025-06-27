@@ -11,14 +11,17 @@ interface SettingsModalProps {
 export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const [personalContext, setPersonalContext] = useState('')
   const [contexts, setContexts] = useState<UserContext[]>([])
+  const [toneExamples, setToneExamples] = useState<UserContext[]>([])
   const [globalRules, setGlobalRules] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isFileUploading, setIsFileUploading] = useState(false)
+  const [isToneUploading, setIsToneUploading] = useState(false)
   const [isRulesLoading, setIsRulesLoading] = useState(false)
 
   useEffect(() => {
     if (isOpen) {
       loadContexts()
+      loadToneExamples()
       loadGlobalRules() // This will handle localStorage fallback automatically
     }
   }, [isOpen])
@@ -65,6 +68,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
         .from('user_contexts')
         .select('*')
         .not('content', 'like', 'GLOBAL_RULES:%')
+        .not('content', 'like', 'TONE_EXAMPLE:%')
         .order('created_at', { ascending: false })
 
       if (error) {
@@ -76,6 +80,31 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
     } catch (error) {
       console.error('Error loading contexts:', error instanceof Error ? error.message : 'Unknown error')
       setContexts([])
+    }
+  }
+
+  const loadToneExamples = async () => {
+    if (!supabaseClient) {
+      console.warn('Supabase not configured')
+      return
+    }
+    
+    try {
+      const { data, error } = await supabaseClient
+        .from('user_contexts')
+        .select('*')
+        .like('content', 'TONE_EXAMPLE:%')
+        .order('created_at', { ascending: false })
+
+      if (error) {
+        console.warn('Could not load tone examples (table may not exist):', error.message || error)
+        setToneExamples([])
+        return
+      }
+      setToneExamples(data || [])
+    } catch (error) {
+      console.error('Error loading tone examples:', error instanceof Error ? error.message : 'Unknown error')
+      setToneExamples([])
     }
   }
 
@@ -121,6 +150,22 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
       await loadContexts()
     } catch (error) {
       console.error('Error deleting context:', error)
+    }
+  }
+
+  const deleteToneExample = async (id: string) => {
+    if (!supabaseClient) return
+    
+    try {
+      const { error } = await supabaseClient
+        .from('user_contexts')
+        .delete()
+        .eq('id', id)
+
+      if (error) throw error
+      await loadToneExamples()
+    } catch (error) {
+      console.error('Error deleting tone example:', error)
     }
   }
 
@@ -258,6 +303,39 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
     }
   }
 
+  const handleToneFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files
+    if (!files) return
+
+    setIsToneUploading(true)
+    try {
+      const uploadPromises = Array.from(files).map(async (file) => {
+        const text = await file.text()
+        const toneContent = `TONE_EXAMPLE:${file.name}\n\n${text}`
+        
+        if (supabaseClient) {
+          return supabaseClient
+            .from('user_contexts')
+            .insert([{ content: toneContent }])
+        }
+        return null
+      })
+
+      const results = await Promise.all(uploadPromises)
+      const successful = results.filter(result => result && !result.error)
+      
+      await loadToneExamples()
+      alert(`Successfully uploaded ${successful.length} of ${files.length} tone examples!`)
+    } catch (error) {
+      console.error('Error uploading tone files:', error)
+      alert('Failed to upload some tone examples. Please try again.')
+    } finally {
+      setIsToneUploading(false)
+      // Reset file input
+      event.target.value = ''
+    }
+  }
+
   if (!isOpen) return null
 
   return (
@@ -276,6 +354,102 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
         </div>
 
         <div className="space-y-6">
+          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-700 rounded-lg p-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-medium text-purple-900 dark:text-purple-100">
+                🎨 Tone & Style Examples ({toneExamples.length})
+              </h3>
+              {toneExamples.length > 0 && (
+                <button
+                  onClick={async () => {
+                    if (confirm('Delete all tone examples?')) {
+                      try {
+                        await Promise.all(toneExamples.map(example => deleteToneExample(example.id!)))
+                        alert('All tone examples deleted!')
+                      } catch (error) {
+                        alert('Failed to delete some examples')
+                      }
+                    }
+                  }}
+                  className="text-xs text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+                >
+                  Clear All
+                </button>
+              )}
+            </div>
+            
+            <p className="text-sm text-purple-700 dark:text-purple-300 mb-4">
+              Upload your writing samples (.md files work great!). The AI will learn your tone, voice, and writing patterns. Perfect for weekly content updates.
+            </p>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-purple-700 dark:text-purple-300 mb-2">
+                📄 Upload Style Examples (Multiple Files Supported)
+              </label>
+              <div className="flex items-center space-x-3">
+                <input
+                  type="file"
+                  accept=".txt,.md,.json,.csv"
+                  onChange={handleToneFileUpload}
+                  disabled={isToneUploading}
+                  multiple
+                  className="block w-full text-sm text-purple-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-purple-100 file:text-purple-700 hover:file:bg-purple-200 dark:file:bg-purple-800 dark:file:text-purple-200"
+                />
+                {isToneUploading && (
+                  <div className="text-purple-600 text-sm">Uploading...</div>
+                )}
+              </div>
+              <p className="text-xs text-purple-600 dark:text-purple-400 mt-1">
+                💡 Select multiple files at once! Perfect for uploading your .md content files. No limit on quantity.
+              </p>
+            </div>
+
+            {toneExamples.length > 0 && (
+              <div className="space-y-3">
+                <h4 className="text-sm font-medium text-purple-700 dark:text-purple-300">
+                  Your Style Examples:
+                </h4>
+                {toneExamples.map((example) => {
+                  const fileName = example.content.split('\n')[0].replace('TONE_EXAMPLE:', '')
+                  const preview = example.content.split('\n\n')[1]?.substring(0, 100) + '...'
+                  
+                  return (
+                    <div
+                      key={example.id}
+                      className="p-3 border border-purple-200 dark:border-purple-600 rounded-lg bg-purple-25 dark:bg-purple-800/30"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="text-sm font-medium text-purple-900 dark:text-purple-100">
+                            📄 {fileName}
+                          </div>
+                          <div className="text-xs text-purple-600 dark:text-purple-400 mt-1">
+                            {preview}
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => deleteToneExample(example.id!)}
+                          className="ml-2 text-red-500 hover:text-red-700 text-sm"
+                        >
+                          🗑️
+                        </button>
+                      </div>
+                      <div className="text-xs text-purple-500 dark:text-purple-400 mt-2">
+                        Added {new Date(example.created_at!).toLocaleDateString()}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+
+            {toneExamples.length === 0 && (
+              <div className="text-center py-4 text-purple-600 dark:text-purple-400 text-sm">
+                No tone examples uploaded yet. Add some to improve AI style matching!
+              </div>
+            )}
+          </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               🚫 Global Generation Rules (Always Applied)
