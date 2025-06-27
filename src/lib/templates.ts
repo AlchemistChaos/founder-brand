@@ -153,7 +153,7 @@ Which is why it's much better to [RightDecision] from the very beginning.`,
     "id": "iconic-quote-thread-of-threads",
     "title": "Iconic Quote (Thread of Threads)",
     "summary": "A hook for a thread of the best threads about a topic.",
-    "template": "[FamousPerson] once said:\n\n"[FamousQuote]"\n\nLuckily, this is a skill anyone can learn.\n\nUnfortunately, most people have never tried—because no one showed them where to start.\n\nSo here are [X] of the best [Topic] threads on Twitter (so you can start learning today):",
+    "template": "[FamousPerson] once said:\n\n\"[FamousQuote]\"\n\nLuckily, this is a skill anyone can learn.\n\nUnfortunately, most people have never tried—because no one showed them where to start.\n\nSo here are [X] of the best [Topic] threads on Twitter (so you can start learning today):",
     "category": "Social Proof / Spotlight"
   },
   {

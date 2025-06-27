@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
 
 // Handle new hook-based thread generation
 async function handleHookBasedGeneration(request: GenerateThreadsRequest) {
-  const { content, selectedHookIds, personalContext, globalRules, customPromptId } = request
+  const { content, selectedHookIds, selectedHooks, personalContext, globalRules, customPromptId } = request
 
   // Validate input
   if (!content || content.trim().length < 10) {
@@ -131,28 +131,27 @@ async function handleHookBasedGeneration(request: GenerateThreadsRequest) {
     // In a production app, you might want to store hooks in a cache/database
     
     const threads = []
-    const selectedHooks = []
 
     for (const hookId of selectedHookIds) {
       try {
+        // Find the corresponding hook data
+        const hookData = selectedHooks?.find(h => h.id === hookId)
+        
+        if (!hookData) {
+          console.error(`Hook data not found for ID: ${hookId}`)
+          continue
+        }
+
         // Generate thread from hook
         const thread = await generateThreadFromHook({
           content,
-          hookId,
+          hookData,
           personalContext,
           globalRules,
           customPromptId
         })
         
         threads.push(thread)
-        
-        // Mock hook data - in real implementation you'd retrieve the actual hook
-        selectedHooks.push({
-          id: hookId,
-          text: `Hook ${hookId}`, // This would be the actual hook text
-          type: hookId.includes('custom') ? 'custom' : 'template' as const,
-          variation: 1 as 1 | 2
-        })
       } catch (error) {
         console.error(`Failed to generate thread for hook ${hookId}:`, error)
         // Continue with other hooks even if one fails
@@ -168,7 +167,7 @@ async function handleHookBasedGeneration(request: GenerateThreadsRequest) {
 
     const response: GenerateThreadsResponse = {
       threads,
-      selectedHooks
+      selectedHooks: selectedHooks || []
     }
 
     return Response.json(response)
@@ -185,13 +184,13 @@ async function handleHookBasedGeneration(request: GenerateThreadsRequest) {
 // Generate thread from a specific hook
 async function generateThreadFromHook({
   content,
-  hookId,
+  hookData,
   personalContext,
   globalRules,
   customPromptId
 }: {
   content: string
-  hookId: string
+  hookData: { id: string; text: string; templateTitle?: string; type: string }
   personalContext?: string
   globalRules?: string
   customPromptId?: string
@@ -206,11 +205,14 @@ async function generateThreadFromHook({
     useEnhancedHooks: false // We're using a specific hook, not random ones
   })
 
+  // Include the hook as the first tweet
+  const tweetsWithHook = [hookData.text, ...thread]
+
   return {
-    id: `thread-${hookId}-${Date.now()}`,
-    hookId,
-    tweets: thread,
-    templateId: hookId.includes('template') ? hookId.split('-')[1] : undefined,
-    templateTitle: hookId.includes('template') ? 'Template Thread' : 'Custom Thread'
+    id: `thread-${hookData.id}-${Date.now()}`,
+    hookId: hookData.id,
+    tweets: tweetsWithHook,
+    templateId: hookData.id.includes('template') ? hookData.id.split('-')[1] : undefined,
+    templateTitle: hookData.templateTitle || (hookData.type === 'template' ? 'Template Thread' : 'Custom Thread')
   }
 }

@@ -39,6 +39,10 @@ export default function Home() {
   
   // UI state
   const [showSettings, setShowSettings] = useState(false)
+  
+  // Context for thread editing
+  const [personalContextValue, setPersonalContextValue] = useState<string>('')
+  const [globalRulesValue, setGlobalRulesValue] = useState<string>('')
 
   // Helper function to get personal context
   const getPersonalContext = async (): Promise<string | undefined> => {
@@ -159,6 +163,8 @@ export default function Home() {
     setThreads([])
 
     try {
+      const selectedHooks = hooks.filter(h => selectedHookIds.includes(h.id))
+      
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: {
@@ -167,6 +173,7 @@ export default function Home() {
         body: JSON.stringify({
           content,
           selectedHookIds,
+          selectedHooks,
           personalContext: usePersonalContext ? await getPersonalContext() : undefined,
           globalRules: await getGlobalRules(),
           customPromptId: customPromptId || undefined,
@@ -180,6 +187,13 @@ export default function Home() {
       }
       
       setThreads(data.threads)
+      
+      // Load context for editing
+      const personalCtx = usePersonalContext ? await getPersonalContext() : undefined
+      const globalRulesCtx = await getGlobalRules()
+      setPersonalContextValue(personalCtx || '')
+      setGlobalRulesValue(globalRulesCtx || '')
+      
       setCurrentStep('threads')
     } catch (error) {
       console.error('Thread generation failed:', error)
@@ -383,6 +397,9 @@ export default function Home() {
             <ResultsDisplay 
               threads={threads}
               selectedHooks={hooks.filter(h => selectedHookIds.includes(h.id))}
+              personalContext={personalContextValue}
+              globalRules={globalRulesValue}
+              onThreadsChange={setThreads}
             />
           </div>
         </div>

@@ -2,11 +2,11 @@
 
 ## Mission Statement
 
-Transform any content into engaging, viral social media content and compelling AI art prompts, empowering content creators, marketers, and entrepreneurs to amplify their message across digital platforms.
+Transform any content into engaging, viral social media content and compelling AI art prompts through an AI-powered hook generation system, empowering content creators, marketers, and entrepreneurs to amplify their message across digital platforms with personalized, template-driven precision.
 
 ## Product Overview
 
-**founder-brand** is an AI-powered content transformation platform that converts diverse content formats (YouTube videos, articles, PDFs, raw text) into high-performing Twitter threads and AI-generated art prompts using advanced GPT-4 technology.
+**founder-brand** is an advanced AI-powered content transformation platform that converts diverse content formats (YouTube videos, articles, PDFs, raw text) into high-performing Twitter threads and AI-generated art prompts using a sophisticated 3-step workflow powered by OpenAI's GPT-4 and an intelligent template matching system.
 
 ## Target Audience
 
@@ -24,72 +24,103 @@ Transform any content into engaging, viral social media content and compelling A
 
 ## Core Value Propositions
 
-### 1. Universal Content Processing
-- **Multi-Format Support**: YouTube, articles, PDFs, raw text
-- **Intelligent Extraction**: Advanced content parsing and cleaning
-- **Fallback Systems**: Multiple extraction methods ensure reliability
-- **Quality Preservation**: Maintains content integrity and context
+### 1. Revolutionary Hook-Based Generation System
+- **AI-Powered Hook Selection**: 10 personalized hooks generated from 50+ templates plus custom creative options
+- **Template Intelligence**: Semantic matching algorithm scores templates against content for optimal fit
+- **Dual Approach**: Template-based hooks (8) + creative AI hooks (2) for maximum variety
+- **User Choice**: Select exactly 2 hooks to generate 2 distinct Twitter threads
 
-### 2. AI-Powered Content Generation
-- **10 Thread Styles**: Summary, Listicle, Myth-busting, Inspirational, Narrative, Q&A, Controversial, Analysis, Ideas, Curated
-- **Smart Hook Selection**: 100+ curated hooks with AI-powered relevance matching
-- **Art Prompt Generation**: Midjourney-style prompts for visual content creation
-- **Personalization**: Custom context injection for brand voice consistency
+### 2. Advanced Content Processing Pipeline
+- **Multi-Format Support**: YouTube, articles, PDFs, raw text with intelligent auto-detection
+- **Client-First Architecture**: PDF processing and YouTube extraction happen in-browser for speed and privacy
+- **Fallback Systems**: Multi-layer extraction with graceful degradation
+- **Quality Preservation**: Maintains content integrity while optimizing for social media
 
-### 3. Advanced Customization
-- **Personal Context**: Brand voice and messaging integration
-- **Custom Prompt Templates**: User-created generation styles
-- **Intelligent Matching**: AI-driven hook and style selection
-- **Output Optimization**: Thread length and engagement optimization
+### 3. Intelligent Template Matching
+- **50+ Professional Templates**: Covering 8 categories from Personal Stories to Educational Breakdowns
+- **Content Analysis**: Automatic detection of themes, tone, personal elements, and statistics
+- **Relevance Scoring**: AI-driven scoring system matches best templates to specific content
+- **Placeholder Intelligence**: Automatic extraction of key data points to fill template variables
+
+### 4. Sophisticated Personalization Engine
+- **Personal Context Integration**: Brand voice and messaging consistency across all generations
+- **Global Rules System**: Universal constraints and guidelines applied to all content
+- **Custom Prompt Templates**: User-created generation styles for unique voice
+- **Variation Generation**: 2 distinct variations per selected approach for A/B testing
 
 ## Product Goals
 
 ### Short-term Goals (3-6 months)
-1. **User Acquisition**: 1,000+ active users
-2. **Content Processing**: 10,000+ pieces of content transformed
-3. **Platform Stability**: 99.9% uptime and reliable content extraction
-4. **User Experience**: Streamlined workflow with <30 second generation time
+1. **User Acquisition**: 1,000+ active users leveraging the hook-based system
+2. **Content Processing**: 10,000+ pieces of content transformed through 3-step workflow
+3. **Platform Stability**: 99.9% uptime with sub-30 second hook generation
+4. **Template Effectiveness**: 85%+ user satisfaction with template relevance scoring
 
 ### Medium-term Goals (6-12 months)
-1. **Advanced Features**: Scheduling, analytics, team collaboration
-2. **Platform Expansion**: LinkedIn, Instagram, Facebook format support
-3. **API Development**: Public API for third-party integrations
-4. **Mobile Optimization**: Progressive web app with mobile-first design
+1. **Template Expansion**: 100+ templates across 12 categories with community contributions
+2. **Advanced Analytics**: Hook performance tracking, A/B testing insights, engagement predictions
+3. **Collaboration Features**: Team workflows, shared templates, approval processes
+4. **Platform Integration**: Direct posting to Twitter, scheduling, analytics integration
 
 ### Long-term Goals (1-2 years)
-1. **Enterprise Features**: White-label solutions, advanced analytics
-2. **AI Enhancement**: Custom model training, brand-specific generation
-3. **Marketplace**: Community-driven prompt templates and hooks
-4. **Global Expansion**: Multi-language support and localization
+1. **Multi-Platform Support**: LinkedIn, Instagram, TikTok format optimization
+2. **AI Enhancement**: Custom model training, brand-specific template generation
+3. **Enterprise Features**: White-label solutions, advanced team management, API access
+4. **Global Expansion**: Multi-language templates, localized content generation
 
-## Key Features & Functionality
+## Revolutionary Features & Functionality
 
-### Content Input & Processing
-- **YouTube Integration**: Automated transcript extraction with fallback mechanisms
-- **Web Scraping**: Intelligent article content extraction via proxy
-- **PDF Processing**: Client-side text extraction with structure preservation  
-- **Text Input**: Direct content input with formatting preservation
-- **Batch Processing**: Multiple content pieces in single session
+### 3-Step Intelligent Workflow
 
-### AI Generation Engine
-- **Multi-Style Generation**: 10 distinct thread styles for different use cases
-- **Hook Intelligence**: Context-aware hook selection from curated database
-- **Art Prompt Creation**: 2-3 Midjourney-style prompts per generation
-- **Quality Control**: Output validation and formatting
-- **Customization**: Personal context and custom prompt integration
+#### Step 1: Smart Content Input
+- **Auto-Detection**: Automatically identifies content type and triggers appropriate extraction
+- **Real-Time Processing**: Live feedback during YouTube transcript extraction
+- **Client-Side Security**: PDF processing happens locally, no file uploads required
+- **Multiple Sources**: Support for URLs, files, and direct text input
 
-### User Experience
-- **Intuitive Interface**: Single-page application with clear workflow
-- **Real-time Processing**: Live content extraction and generation feedback
+#### Step 2: AI-Powered Hook Generation
+- **Template Scoring**: Analyzes content against 50+ templates with relevance percentages
+- **Dual Generation**: Template-based hooks (8) + creative Claude hooks (2)
+- **Visual Selection**: Interactive card-based interface with template information
+- **Smart Constraints**: Exactly 2 hook selection for optimal thread diversity
+
+#### Step 3: Hook-Specific Thread Creation
+- **Personalized Threads**: Each thread built around selected hook's tone and style
+- **Template Consistency**: Template-based threads follow proven viral patterns
+- **Creative Freedom**: Custom hooks enable unique, standout content
+- **Art Integration**: 2-3 Midjourney-style prompts per thread for visual content
+
+### Advanced Template System
+
+#### Template Categories
+- **Personal Story**: First-person narratives and experiences
+- **Curation**: Best resources, tools, and recommendations
+- **Educational Breakdown**: Step-by-step guides and explainers
+- **Advice & Life Lessons**: Wisdom and actionable insights
+- **Social Proof / Spotlight**: Success stories and case studies
+- **Book-Based**: Literature insights and key takeaways
+- **Insight & Prediction**: Industry analysis and future trends
+- **Meta / Reflection**: Commentary on content creation and writing
+
+#### Intelligent Matching Algorithm
+- **Content Analysis**: Automatic detection of personal stories, statistics, quotes
+- **Semantic Scoring**: Relevance matching based on topic, tone, and structure
+- **Quality Thresholds**: Only high-scoring templates (>50%) shown to users
+- **Reason Transparency**: Clear explanations for why templates were selected
+
+### Enhanced User Experience
+
+#### Progressive Disclosure
+- **Step-by-Step Guidance**: Clear progression through the 3-step workflow
+- **Visual Feedback**: Real-time processing indicators and success states
+- **Smart Defaults**: Intelligent pre-selection based on content analysis
+- **Error Recovery**: Graceful handling of failures with actionable guidance
+
+#### Intelligent Interface Design
+- **Hook Comparison**: Side-by-side template vs. creative hook sections
+- **Preview Expansion**: Hover to see full hook text for long content
+- **Selection Management**: Visual indicators for selection state and limits
 - **Copy Optimization**: One-click copying with visual confirmation
-- **Error Handling**: Graceful fallbacks with user-friendly messaging
-- **Settings Management**: Personal context and custom prompt organization
-
-### Data Management
-- **Personal Context Storage**: User-specific information persistence
-- **Custom Prompt Templates**: Create, edit, and organize custom styles
-- **Generation History**: Access to previously generated content
-- **Cross-device Sync**: Cloud-based data synchronization
 
 ## Technical Specifications
 

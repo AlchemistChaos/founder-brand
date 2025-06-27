@@ -2,6 +2,21 @@
 
 import { TwitterTemplate, TemplateMatch } from './templates';
 
+// Export template-related types
+export type { TwitterTemplate, TemplateMatch } from './templates';
+
+// Content Analysis type
+export interface ContentAnalysis {
+  hasPersonalStory: boolean;
+  hasStatistics: boolean;
+  hasQuotes: boolean;
+  hasNamedPeople: boolean;
+  hasFrameworks: boolean;
+  hasBookReferences: boolean;
+  mainTopics: string[];
+  tone: 'inspirational' | 'educational' | 'analytical' | 'controversial' | 'personal';
+}
+
 // Hook data structure
 export interface Hook {
   id: string;
@@ -24,22 +39,14 @@ export interface GenerateHooksRequest {
 export interface GenerateHooksResponse {
   hooks: Hook[];
   topTemplates: TemplateMatch[]; // Top 5 templates used
-  contentAnalysis: {
-    hasPersonalStory: boolean;
-    hasStatistics: boolean;
-    hasQuotes: boolean;
-    hasNamedPeople: boolean;
-    hasFrameworks: boolean;
-    hasBookReferences: boolean;
-    mainTopics: string[];
-    tone: 'inspirational' | 'educational' | 'analytical' | 'controversial' | 'personal';
-  };
+  contentAnalysis: ContentAnalysis;
 }
 
 // Thread generation from selected hooks
 export interface GenerateThreadsRequest {
   content: string;
   selectedHookIds: string[]; // 2 selected hook IDs
+  selectedHooks?: Hook[]; // Full hook data
   personalContext?: string;
   globalRules?: string;
   customPromptId?: string;
@@ -72,7 +79,7 @@ export interface GenerationState {
   // Hook generation results
   hooks: Hook[];
   topTemplates: TemplateMatch[];
-  contentAnalysis?: GenerateHooksResponse['contentAnalysis'];
+  contentAnalysis?: ContentAnalysis;
   
   // Hook selection
   selectedHookIds: string[];
@@ -101,7 +108,7 @@ export interface HookGenerationContext {
 // Custom hook generation context
 export interface CustomHookContext {
   content: string;
-  contentAnalysis: GenerateHooksResponse['contentAnalysis'];
+  contentAnalysis: ContentAnalysis;
   personalContext?: string;
   variation: 1 | 2;
 }
@@ -138,4 +145,33 @@ export interface GenerationMetrics {
   timeToGenerateHooks: number;
   timeToGenerateThreads?: number;
   selectedTemplateTypes: string[];
+}
+
+// Tweet editing and rewriting types
+export interface RewriteRequest {
+  selectedText: string;
+  fullTweet: string;
+  rewriteType: 'grammar' | 'improve' | 'punchy' | 'condense' | 'rephrase';
+  customPrompt?: string;
+  threadContext?: string[];
+  personalContext?: string;
+  globalRules?: string;
+}
+
+export interface RewriteResponse {
+  rewrittenText: string;
+  originalText: string;
+}
+
+export interface TextSelection {
+  text: string;
+  start: number;
+  end: number;
+}
+
+export interface EditableTweetState {
+  isEditing: boolean;
+  originalText: string;
+  currentText: string;
+  hasChanges: boolean;
 }

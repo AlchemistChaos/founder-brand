@@ -1,11 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { TwitterThread, Hook } from '@/lib/types'
+import EditableTweet from './EditableTweet'
 
 interface ResultsDisplayProps {
   threads?: TwitterThread[]
   selectedHooks?: Hook[]
+  personalContext?: string
+  globalRules?: string
+  onThreadsChange?: (threads: TwitterThread[]) => void
   // Legacy support for old format
   results?: {
     thread: string[]
@@ -13,9 +17,39 @@ interface ResultsDisplayProps {
   }
 }
 
-export default function ResultsDisplay({ threads, selectedHooks, results }: ResultsDisplayProps) {
+export default function ResultsDisplay({ 
+  threads, 
+  selectedHooks, 
+  personalContext,
+  globalRules,
+  onThreadsChange,
+  results 
+}: ResultsDisplayProps) {
   const [copiedThread, setCopiedThread] = useState<string | null>(null)
   const [copiedPrompts, setCopiedPrompts] = useState(false)
+  const [editableThreads, setEditableThreads] = useState<TwitterThread[]>(threads || [])
+
+  // Update editable threads when props change
+  useEffect(() => {
+    if (threads) {
+      setEditableThreads(threads)
+    }
+  }, [threads])
+
+  // Handle tweet updates
+  const handleTweetChange = (threadId: string, tweetIndex: number, newText: string) => {
+    const updatedThreads = editableThreads.map(thread => {
+      if (thread.id === threadId) {
+        const updatedTweets = [...thread.tweets]
+        updatedTweets[tweetIndex] = newText
+        return { ...thread, tweets: updatedTweets }
+      }
+      return thread
+    })
+    
+    setEditableThreads(updatedThreads)
+    onThreadsChange?.(updatedThreads)
+  }
 
   const copyToClipboard = async (text: string, type: 'thread' | 'prompts', threadId?: string) => {
     try {
@@ -118,7 +152,7 @@ export default function ResultsDisplay({ threads, selectedHooks, results }: Resu
   }
 
   // New format with hook-based threads
-  if (!threads || threads.length === 0) {
+  if (!editableThreads || editableThreads.length === 0) {
     return (
       <div className="text-center py-8">
         <div className="text-gray-500 dark:text-gray-400">
@@ -136,7 +170,7 @@ export default function ResultsDisplay({ threads, selectedHooks, results }: Resu
           Your Generated Threads
         </h2>
         <p className="text-gray-600 dark:text-gray-400">
-          {threads.length} thread{threads.length !== 1 ? 's' : ''} generated from your selected hooks
+          {editableThreads.length} thread{editableThreads.length !== 1 ? 's' : ''} generated from your selected hooks
         </p>
       </div>
 
@@ -169,8 +203,8 @@ export default function ResultsDisplay({ threads, selectedHooks, results }: Resu
       )}
 
       {/* Threads Display */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {threads.map((thread, index) => {
+      <div className="space-y-8">
+        {editableThreads.map((thread, index) => {
           const threadText = thread.tweets.join('\n\n')
           const correspondingHook = selectedHooks?.find(h => h.id === thread.hookId)
           
@@ -211,23 +245,22 @@ export default function ResultsDisplay({ threads, selectedHooks, results }: Resu
               )}
               
               {/* Thread Content */}
-              <div className="space-y-3 max-h-96 overflow-y-auto">
-                {thread.tweets.map((tweet, tweetIndex) => (
-                  <div
-                    key={tweetIndex}
-                    className="p-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700"
-                  >
-                    <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
-                      Tweet {tweetIndex + 1}/{thread.tweets.length}
-                    </div>
-                    <div className="text-gray-900 dark:text-white whitespace-pre-wrap text-sm">
-                      {tweet}
-                    </div>
-                    <div className="text-xs text-gray-400 mt-2">
-                      {tweet.length} characters
-                    </div>
-                  </div>
-                ))}
+              <div className="space-y-4">
+                {thread.tweets.map((tweet, tweetIndex) => {
+                  const threadContext = editableThreads.map(t => t.tweets).flat()
+                  return (
+                    <EditableTweet
+                      key={`${thread.id}-${tweetIndex}`}
+                      tweetText={tweet}
+                      tweetIndex={tweetIndex}
+                      totalTweets={thread.tweets.length}
+                      threadContext={threadContext}
+                      personalContext={personalContext}
+                      globalRules={globalRules}
+                      onTweetChange={(newText) => handleTweetChange(thread.id, tweetIndex, newText)}
+                    />
+                  )
+                })}
               </div>
 
               {/* Thread Stats */}
@@ -243,7 +276,7 @@ export default function ResultsDisplay({ threads, selectedHooks, results }: Resu
       </div>
 
       {/* Art Prompts (if available) */}
-      {threads.some(t => t.artPrompts && t.artPrompts.length > 0) && (
+      {editableThreads.some(t => t.artPrompts && t.artPrompts.length > 0) && (
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -251,7 +284,7 @@ export default function ResultsDisplay({ threads, selectedHooks, results }: Resu
             </h3>
             <button
               onClick={() => {
-                const allPrompts = threads
+                const allPrompts = editableThreads
                   .flatMap(t => t.artPrompts || [])
                   .join('\n\n')
                 copyToClipboard(allPrompts, 'prompts')
@@ -268,7 +301,7 @@ export default function ResultsDisplay({ threads, selectedHooks, results }: Resu
           </div>
           
           <div className="space-y-3">
-            {threads.flatMap(t => t.artPrompts || []).map((prompt, index) => (
+            {editableThreads.flatMap(t => t.artPrompts || []).map((prompt, index) => (
               <div
                 key={index}
                 className="p-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700"
