@@ -38,6 +38,7 @@ export default function HookSelector({
   }
 
   const templateHooks = hooks.filter(hook => hook.type === 'template')
+  const powerHooks = hooks.filter(hook => hook.type === 'power-hook')
   const customHooks = hooks.filter(hook => hook.type === 'custom')
 
   if (hooks.length === 0) {
@@ -82,6 +83,30 @@ export default function HookSelector({
           </div>
         </div>
       </div>
+
+      {/* Power Hooks Section (Primary) */}
+      {powerHooks.length > 0 && (
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center space-x-2">
+            <span>🔥 Power Hooks</span>
+            <span className="text-sm font-normal text-orange-600 dark:text-orange-400 bg-orange-100 dark:bg-orange-900/30 px-2 py-1 rounded-full">
+              Viral Potential
+            </span>
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {powerHooks.map((hook) => (
+              <HookCard
+                key={hook.id}
+                hook={hook}
+                isSelected={selectedHookIds.includes(hook.id)}
+                onSelect={handleHookSelect}
+                disabled={!selectedHookIds.includes(hook.id) && selectedHookIds.length >= maxSelection}
+                showTemplateInfo={true}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Template Hooks Section */}
       {templateHooks.length > 0 && (
