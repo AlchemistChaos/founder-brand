@@ -1,0 +1,884 @@
+[
+  {
+    "id": "career-mistakes",
+    "title": "Career Mistakes",
+    "summary": "Help readers avoid mistakes by learning from your experiences.",
+    "template": "I asked [X] [Niche] leaders one simple question:\n\n\u201cWhat early career mistake will you never make again?\u201d\n\nThe result: [X] profound mistakes everyone (from intern to executive) should avoid in their career.\n\nLet\u2019s dive in:\n\nMistake 1: [Mistake1]\n\nToo often, [Role] choose to [WrongDecision].\n\nInstead, [Role] should be focused on [RightDecision].\n\nThis is what ends up making the biggest difference.\n\nMistake 2: [Mistake2]\n\nA good [Role] can [GoodOutcome].\n\nA bad [Role] can [BadOutcome].\n\nBut a legendary [Role] can [GiantOutcome].\n\nMistake 3: [Mistake3]\n\nUntil you\u2019ve [Milestone], don\u2019t take your eye off the ball.\n\n[\u201dRelevantQuote\u201d].\n\nMistake 4: [Mistake4]\n\nTraditional wisdom says [TraditionalWisdom].\n\nBut that\u2019s only true if you don\u2019t do two things correctly:\n\n[RightDecision1]\n\n[RightDecision2]\n\nThen, [TraditionalWisdom] works great.\n\nMistake 5: [Mistake5]\n\nWe all think we can [Decision].\n\nUntil we can\u2019t.\n\nWhich is why it\u2019s much better to [RightDecision] from the very beginning.",
+    "category": "Personal Story"
+  },
+  {
+    "id": "curated-frameworks",
+    "title": "Curated Frameworks",
+    "summary": "Transform other people\u2019s mental models into consumable content.",
+    "template": "The world\u2019s most valuable skill:\n\n[Skill]\n\nBut [Obstacle] keeps people from ever learning how to do it\u2014and costs them roughly [Money] in the process.\n\nSo, here are [X] [Topic] frameworks that cost you nothing and will save you hundreds of painful hours:\n\n1) [Name]\u2019s [Topic] Framework\n\nThis completely changed the way I thought about [Topic].\n\n[LinkToThread]\n\n2) [Name]\u2019s [Topic] Framework\n\nHang this up in your room somewhere\u2014and stare at it everyday.\n\n[LinkToThread]\n\n3) [Name]\u2019s [Topic] Framework\n\nI consider this the Bible of [Topic].\n\n[LinkToThread]\n\n4) [Name]\u2019s [Topic] Framework\n\nStruggling with [Obstacle]?\n\nRead this:\n\n[LinkToThread]\n\n5) [Name]\u2019s [Topic] Framework\n\nFinally, every [Audience] should read this:\n\n[LinkToThread]",
+    "category": "Curation"
+  },
+  {
+    "id": "curated-takeaways",
+    "title": "Curated Takeaways",
+    "summary": "Crystallize your own learnings by sharing your takeaways with others.",
+    "template": "The [Status] of [Topic]:\n\n[Name]\n\nOver [TimePeriod], [Name] has [Achievement].\n\nSo I binged over [X] [Assets] of theirs to study how exactly [Name] reached [Achievement].\n\nHere\u2019s what I learned\u2013broken down in a simple [X]-step framework you can use to [Outcome]:\n\nSome quick stats on [Name] if you're unfamiliar:\n\n[AchievementStat1]\n\n[AchievementStat2]\n\n[AchievementStat3]\n\n[AchievementStat4]\n\nSo... what can we learn?\n\n[Name] creates [Assets] with this simple, 3-part framework:\n\n1) [Step1]\n\n2) [Step2]\n\n3) [Step3]\n\nNow, pair this framework with an unmatched work ethic and you get a potent combination for rapid growth.\n\nLet's dig in:\n\nFor [Name], everything begins with [Step1].\n\nThe reason is because [Reason].\n\nTo do this, [Name] does the following:\n\n[Tactic1]\n\n[Tactic2]\n\n[Tactic3]\n\nSimple, but highly effective.\n\nThe next thing [Name] focuses on is [Step2].\n\nThey do this by [Tactic], and sometimes even [Tactic].\n\nWhich leads us to\u2026\n\nThe real reason [Name] is so successful at [Outcome] is because they are obsessive about:\n\n[Tactic]\n\n[Tactic]\n\n[Tactic]\n\nThis, combined with [Step1] and [Step2] is what makes them so successful.\n\nSo, let's recap what we've learned:\n\nFirst, study [Step1].\n\nAnd remember to [DescriptionStep1].\n\nSecond, study the art of [Step2]. Do this by:\n\n1) [Tactic1]\n\n2) [Tactic2]\n\n3) [Tactic3]\n\nAnd lastly, don't [Mistake].\n\nInstead, [Step 3].\n\nAnd don\u2019t forget to [DescriptionStep3].\n\nDo the above, and maybe you will be the next [Status] of [Topic]!",
+    "category": "Curation"
+  },
+  {
+    "id": "curated-blog-posts",
+    "title": "Curated Blog Posts",
+    "summary": "Thread Opener: top blog posts you recommend reading.",
+    "template": "2.5 billion blog posts are published each year.\n\nBut it\u2019s impossible to read that much content.\n\nSo, ignore the 2,499,999,992 that aren\u2019t worth your time.\n\nAnd just read these 8:\n\n[Write your thread here]",
+    "category": "Curation"
+  },
+  {
+    "id": "curated-tedtalks",
+    "title": "Curated TedTalks",
+    "summary": "Thread Opener: curate a list of TedTalks that you believe your audience will find useful.",
+    "template": "I am an education junkie.\n\nFor example, I have watched over [X] hours watching nearly every TedTalk on the Internet.\n\nMany are interesting. But only a few are worth your time.\n\nHere is a list of my [X] favorites\u2014that will help you [Outcome1], [Outcome2], and [Outcome3]:\n\n[Write your thread here]",
+    "category": "Curation"
+  },
+  {
+    "id": "curated-twitter-threads",
+    "title": "Curated Twitter Threads",
+    "summary": "Thread Opener: best threads for the audience to start learning about your niche.",
+    "template": "[FamousPerson] once said:\n\n[RelevantNicheQuote]\n\nLucky for you, [Niche] is a skill anyone can acquire.\n\nUnfortunately, most people never learn it\u2014because no one shows them where to start.\n\nSo here are [X] of the best [Niche] threads (so you can start learning today):\n\n[Write your thread here]",
+    "category": "Curation"
+  },
+  {
+    "id": "curated-youtube-channels",
+    "title": "Curated YouTube Channels",
+    "summary": "Thread Opener: YouTube channels that provide valuable information about a niche.",
+    "template": "If Twitter is a free University, then YouTube is a free Graduate Program.\n\nHere are [X] YouTube channels you can follow to become a master of [Niche]\u2014that are so valuable they should charge $100,000+ for the information & insight they provide:\n\n[Write your thread here]",
+    "category": "Curation"
+  },
+  {
+    "id": "individual-book-breakdown",
+    "title": "Individual Book Breakdown",
+    "summary": "Thread Opener: introduce a book that has a simple step-by-step process for a desired outcome.",
+    "template": "[BookMainTitle]\n\n[BookSubtitle]\n\nBack in [Year], legendary [StatusTitle] [Author] distilled his/her/their [X] years of wisdom into [X] pages.\n\nAnd in this book, [He/She/They] shared a simple [X]-step process for [Outcome].\n\nHere\u2019s the breakdown:\n\n[Write your thread here]",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "1000-hours",
+    "title": "1,000 Hours",
+    "summary": "A hook for a thread sharing what you've learned after 1,000 hours of studying a topic.",
+    "template": "I spent over 1,000 hours learning to [Skill] effectively\u2014 because college completely failed to teach me.\n\nHere's everything I learned distilled into 11 tweets (that you can start applying today):",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "best-book-this-year",
+    "title": "Best Book This Year",
+    "summary": "Thread hook introducing the best book you've read this year.",
+    "template": "The best book I've read this year:\n\n[BookTitle] by [AuthorName].\n\nBuried inside this gem are 4 short pages that pack more insights on [Outcome] than any book I've ever read.\n\nHere are [X] quotes that will change the way you think about [Topic] forever:",
+    "category": "Book-Based"
+  },
+  {
+    "id": "college-failed-me",
+    "title": "College Failed Me",
+    "summary": "Thread hook for the frameworks that helped you learn a skill college failed to teach you.",
+    "template": "College completely failed in teaching me how to [Skill].\n\nSo I spent over 500 hours studying legendary [SkillTeachers].\n\nThen, I distilled what I learned into [X] simple frameworks.\n\nBut unlike college, these won't cost you [$X].\n\nHere they are for free:",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "highest-paid-person-ever",
+    "title": "Highest Paid Person Ever",
+    "summary": "Thread hook for strategies used by the highest paid person in a specific field.",
+    "template": "The highest-paid [SkillPerson] in history: [Name]\n\n[His/Her] legendary [Asset] have generated over [$X] in revenue.\n\nLuckily, in a rare interview in [Year], [He/She] revealed their [X] time-tested strategies for [Outcome].\n\nHere's a breakdown of each one:",
+    "category": "Social Proof / Spotlight"
+  },
+  {
+    "id": "iconic-quote-thread-of-threads",
+    "title": "Iconic Quote (Thread of Threads)",
+    "summary": "A hook for a thread of the best threads about a topic.",
+    "template": "[FamousPerson] once said:\n\n\u201c[FamousQuote]\u201d\n\nLuckily, this is a skill anyone can learn.\n\nUnfortunately, most people have never tried\u2014because no one showed them where to start.\n\nSo here are [X] of the best [Topic] threads on Twitter (so you can start learning today):",
+    "category": "Social Proof / Spotlight"
+  },
+  {
+    "id": "if-you-use-it-right",
+    "title": "If You Use It Right",
+    "summary": "Thread hook for uncommonly known features about a specific platform.",
+    "template": "If you use it right, [PlatformName] is the most powerful platform in the world.\n\nBut [PlatformName] does a horrible job [Problem].\n\nHere are [X] [Features] you probably don\u2019t know exist:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "successful-company-laws-of-success",
+    "title": "Successful Company Laws of Success",
+    "summary": "Thread hook: rules for success used by a successful company.",
+    "template": "The most [Description] company of the last [X] years:\n\n[Company]\n\nBack in [Date], [Company] shared their manifesto for [Topic].\n\nAnd the rules are a must-read for [Audience1], [Audience2], and anyone who wants to [Outcome].\n\nHere\u2019s the breakdown:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "the-godfather",
+    "title": "The Godfather",
+    "summary": "Thread hook that introduces the Godfather of an industry.",
+    "template": "The Godfather of [Industry]: [Name]\n\nIn [Year], [he/she] published [BookName], a book so good the original [RecordOutcome].\n\nAnd inside, [he/she] shared the [Topic] routine that helped [him/her] [Outcome1] and [Outcome2].\n\nHere's the breakdown:",
+    "category": "Social Proof / Spotlight"
+  },
+  {
+    "id": "the-king-of-x-platform",
+    "title": "The King of X Platform",
+    "summary": "Thread hook for how the King (or Queen) of X platform has grown so quickly.",
+    "template": "The KING of [Platform]:\n\n[Name]\n\nOver the last 12 months, [He/She] has gained over [X] subscribers.\n\nSo I binge watched [X] hours of [His/Her] videos to study how [He/She/They] have grown so quickly.\n\nAnd here's [His/Her] [X]-part framework for rapid growth (that you can use on any platform):",
+    "category": "Social Proof / Spotlight"
+  },
+  {
+    "id": "the-most-valuable-feature",
+    "title": "The Most Valuable Feature",
+    "summary": "Thread hook for a guide on how to use a valuable feature from a platform.",
+    "template": "The most valuable [Platform] feature you aren\u2019t using:\n\n[Feature]\n\nKnowing how to use it will help you [Outcome1] and [Outcome2].\n\nHere\u2019s a step-by-step guide on how to use it:",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "worlds-most-valuable-skill",
+    "title": "World's Most Valuable Skill",
+    "summary": "Thread hook: share the world's most valuable skill and the frameworks that will help your audience learn it.",
+    "template": "The world\u2019s most valuable skill:\n\n[Skill]\n\nBut colleges charge you [$X] and still do a terrible job teaching it.\n\nInstead, here are [X] [Skill] frameworks that you cost you nothing and will save you hundreds of hours:",
+    "category": "Insight & Prediction"
+  },
+  {
+    "id": "expertise-secrets",
+    "title": "Expertise Secrets",
+    "summary": "Leverage your unique knowledge to have an impact on your industry.",
+    "template": "{Topic} 101\n\nOver the past {X} years, I have {ShortCredibilityStatement}.\n\nWant to know a secret?\n\nI use the same {X}{Technique} every",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "the-book-curation-thread",
+    "title": "The Book Curation Thread",
+    "summary": "Create a compilation of books that you think are worth the read.",
+    "template": "Over the past X amount of time, I have read X number of [specific genre].\n\n99% of them weren't worth it.\n\nSave yourself the time and just read/listen/follow these X \ud83e\uddf5\ud83d\udc47\n\nBook",
+    "category": "Curation"
+  },
+  {
+    "id": "credibility-and-lessons",
+    "title": "Credibility & Lessons",
+    "summary": "Share your secrets to achieving an outcome along with actionable advice for the reader.",
+    "template": "Over the past X years, I have [list 3 accomplishments/accolades of credibility].\n\nWhat most people don\u2019t know?\n\nI use the same X [approaches, templates, techniques, strategies, etc.] every time.\n\n\ud83e\uddf5\ud83d\udc47\n\nTemplate #1: One sentence\n\nWhat\u2019s the fastest way to achieve X?\n\nDo Y.\n\nSuccess here 100% comes down to:\n\n\u2022 Action step\n\n\u2022 Action",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "curated-list",
+    "title": "Curated List",
+    "summary": "Curate a list of tips and lessons from an expert that will benefit the reader in some way.",
+    "template": "X person is best known for doing Y.\n\nIn [year / book / speech / etc.], he/she put together a masterclass on X topic.\n\nThese X [ideas / things / tips / lessons / etc.] will change the way you [list 3 benefits to the reader].\n\nHere\u2019s a",
+    "category": "Curation"
+  },
+  {
+    "id": "if-i-had-to-do-it-over-again-thread",
+    "title": "'If I Had To Do It Over Again' Thread",
+    "summary": "Things you would do differently to achieve a specific outcome faster.",
+    "template": "I started [doing X] when I was [Y years old].\n\nSince then, I've...\n\n\u2022\u00a0Accomplishment #1\n\n\u2022\u00a0Accomplishment #2\n\n\u2022\u00a0Accomplishment #3\n\n\u2022\u00a0Accomplishment #4\n\nIf I had to do it all over again, here are 5 things I'd do differently.\n\nThing #1: Don't do X.\n\nAt the time, I thought [this] was a good idea.\n\nIt wasn't.\n\nIt led",
+    "category": "Personal Story"
+  },
+  {
+    "id": "personal-story-+-advice",
+    "title": "Personal Story + Advice",
+    "summary": "Use a personal story to give advice on a specific topic.",
+    "template": "Mastering X unlocks Y.\n\nUnfortunately, we don\u2019t get taught how to do this.\n\nFor the past X years, I have been [explain what makes you a credible source of information on this topic].\n\nHere are X pieces of advice that will help you [restate Y + 2-3 more benefits].\n\n\ud83e\uddf5\ud83d\udc47\n\nAdvice #1: One sentence.\n\nWhen we\u2019re first starting out, we think X",
+    "category": "Personal Story"
+  },
+  {
+    "id": "the-framework-thread",
+    "title": "The Framework Thread",
+    "summary": "Share the step-by-step framework you use to achieve a desirable outcome.",
+    "template": "In [date], I experienced X problem.\n\nThen, I did [something unconventional].\n\nHere's the X-Step framework I use to achieve [highly desirable outcome]\n\n\ud83e\uddf5\ud83d\udc47\n\nStep 1: (What is it?)\n\nMost people think X.\n\nInstead, I want you to think Y (opposite of X).\n\nIf you do this, here are",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "transformation-story",
+    "title": "Transformation Story",
+    "summary": "Share a story about how you went from being stuck to where you are today.",
+    "template": "Origin story: when I was X, I was stuck, experiencing:\n\n\u2022 Pain point #1\n\n\u2022 Pain point #2\n\n\u2022 Pain point #3\n\nY years later, I\u2019m here now.\n\nOne sentence of what\u2019s different now.\n\nHere\u2019s what this journey taught me about [topic]\n\n\ud83e\uddf5\ud83d\udc47\n\nLesson #1: One sentence.\n\nQuick story of",
+    "category": "Personal Story"
+  },
+  {
+    "id": "industry-insights",
+    "title": "Industry Insights",
+    "summary": "Shed some light on where you believe the future is headed.",
+    "template": "The {Niche} industry is on fire.\n\nSome stats:\n\n1. {Stat1}\n\n2. {Stat2}\n\n3. {Stat3}\n\nBut it\u2019s not until you break each of these stats down that you realize how quickly the {Niche} industry",
+    "category": "Insight & Prediction"
+  },
+  {
+    "id": "life-lessons",
+    "title": "Life Lessons",
+    "summary": "Share the timeless wisdom that has made the biggest difference in your life.",
+    "template": "{X} rules for a life",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "best-threads",
+    "title": "Best Threads",
+    "summary": "Thread hook: share some of your threads that have gone viral.",
+    "template": "I started writing threads on Twitter in {Year}.\n\nSince then, I\u2019ve written more than {X} threads and accumulated",
+    "category": "Personal Story"
+  },
+  {
+    "id": "books-instead-of-college",
+    "title": "Books Instead of College",
+    "summary": "A thread hook for a list of books to read instead of spending thousands on college tuition.",
+    "template": "The average tuition for an MBA comes to $60,000 per year.\n\nThat means you're $120,000 in debt...\n\n...before you begin your [Industry] journey!\n\nOr, you could spend less than $250 and read these 8 legendary books on [Topic1], [Topic2], [Topic3]:",
+    "category": "Book-Based"
+  },
+  {
+    "id": "books-worth-reading",
+    "title": "Books Worth Reading",
+    "summary": "Thread hook for a list of books you think are worth reading.",
+    "template": "Over the past [X] years, I have read over [X] [Topic] books.\n\n99% were 1 idea stretched across 300 pages.\n\nThey should have been blog posts.\n\nSave yourself the time and just read these [X]:",
+    "category": "Book-Based"
+  },
+  {
+    "id": "every-single-day",
+    "title": "Every Single Day",
+    "summary": "A thread hook sharing 5 activities you look forward to doing every day.",
+    "template": "Every single day, I wake up ecstatic to do 5 things:\n\n1) [Activity1]\n\n2) [Activity2]\n\n3) [Activity3]\n\n4) [Activity4]\n\n5) [Activity5]\n\nEach for different reasons:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "framework-for-success",
+    "title": "Framework For Success",
+    "summary": "Thread hook that introduces the framework you have used to achieve outcomes.",
+    "template": "In [Year], I [Outcome].\n\nIn [FollowingYear], I [DoubledOutcome].\n\nHere\u2019s the [X]-step framework I used to [Outcome1] and [Outcome2]\u2014and how I plan on [GiantOutcome3] again next year:",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "masterclass-synopsis",
+    "title": "MasterClass Synopsis",
+    "summary": "Thread hook for a synopsis of a MasterClass you have taken.",
+    "template": "[FamousPerson] is one of the [Credibility] of all time.\n\n[FamousOutcome1]\n\n[FamousOutcome2]\n\n[FamousOutcome3]\n\nI am fascinated by [his/her] career.\n\nSo I watched [his/her] MasterClass (twice!).\n\nHere are the golden nuggets:",
+    "category": "Social Proof / Spotlight"
+  },
+  {
+    "id": "morning-habit",
+    "title": "Morning Habit",
+    "summary": "A thread hook introducing a habit you do every single morning.",
+    "template": "I [Habit] every single morning for at least [X] minutes.\n\nI've been doing this since [Year].\n\nBut over the years, I've learned you can (very easily) overcomplicate the act of [Habit].\n\nWhich is why now I only use [X] simple [Techniques]:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "proven-tips-thread-of-threads",
+    "title": "Proven Tips (Thread of Threads)",
+    "summary": "A thread hook introducing a thread of powerful tips you've shared over time.",
+    "template": "Over the past year, I have tweeted hundreds of small (but powerful) [Topic] Tips.\n\nBut these [X] accumulated more than [X] views and thousands of comments & shares.\n\nHere they are all in one place:",
+    "category": "Meta / Reflection on Writing"
+  },
+  {
+    "id": "rules-to-live-by",
+    "title": "Rules to Live By",
+    "summary": "Thread hook for rules of success to live by.",
+    "template": "I have been [Topic] for [X] years.\n\nIn that time, I have [Outcome] more times than I can count.\n\nThese are the [X] rules of success I live by\u2014to create things that have a giant impact:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "tips-to-hang-on-your-wall",
+    "title": "Tips To Hang On Your Wall",
+    "summary": "A hook for a thread about {Topic} tips you should hang on your wall.",
+    "template": "[X] [Topic] tips you should hang on your wall:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "topic-101",
+    "title": "Topic 101",
+    "summary": "A hook for a thread where you can share the templates you use every time to achieve success.",
+    "template": "[Topic] 101\n\nOver the past [X] years, I have [Credibility1], [Credibility2], [Credibility3].\n\nWant to know a secret?\n\nI use the same [X] templates every time:",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "personal-stories",
+    "title": "Personal Stories",
+    "summary": "Tell stories that allow readers to see themselves in you.",
+    "template": "When I [OldLifeCompleted], I [NewLifeBeginning].\n\nIt was [NegativeDetail].\n\n[NegativeDetail]. [NegativeDetail].\n\n[X] years later, I just [LifeAchievement].\n\nHere\u2019s what those difficult years taught me about [Topic]:\n\nLesson 1: [Lesson1]\n\nBack then, I used to [PositiveHabit].\n\nDespite [NegativeObstacle].\n\nThe only difference between then and now is [UnexpectedSmallDetail].\n\nLesson 2: [Lesson2]\n\nFor the first few years, all I had was a [HumbleBeginning] and a [HumbleBeginning].\n\nSince then, I\u2019ve [PositiveOutcome].\n\nBut can I tell you something?\n\nThose two [HumbleBeginnings] still mean more to me than anything.\n\nAll you need.\n\nLesson 3: [Lesson3]\n\nWhen I was first starting out, I was so determined to achieve [X] that I deprived myself of [ShortTermOutcome].\n\nEveryone thought I was crazy.\n\nBut, [X] years later, I had successfully become [Outcome].\n\nMeanwhile, a lot of people around me hadn\u2019t moved at all.\n\nLesson 4: [Lesson4]\n\nI used to be very insecure about [Weakness].\n\nI was ashamed that I didn\u2019t have [Outcome].\n\nAnd I didn\u2019t [PositiveAction] because of it.\n\nIt took me a long time to realize those insecurities were holding me back.\n\nAnd no amount of success would fix them for me.\n\nLesson 5: [Lesson5]\n\nAfter college, a lot of people around me said:\n\n[WrongAdvice]\n\nBut then I\u2019d watch them struggle to make progress in their own lives.\n\nA big part of success is going in a different direction.\n\nAnd remember: if it was easy, everyone would do it.",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "contrarian-views",
+    "title": "Contrarian Views",
+    "summary": "Thread Opener: unconventional views that made you successful.",
+    "template": "I used to see the world the same as the 99%.\n\nBut since adopting these [X] contrarian views held by the top 1%, how I view [ReachTopic] has completely changed (and got me to [GiantOutcome]):\n\n[Write your thread here]",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "dont-waste-time",
+    "title": "Don't Waste Time",
+    "summary": "Thread Opener: ways to be more productive.",
+    "template": "There are a zillion ways to waste time online.\n\n(Everyone knows how to do that.)\n\nBut if you want to save time and accomplish 10x more, here are [X] [Tools] that will make your Internet time more productive:\n\n[Write your thread here]",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "lies-youve-been-told",
+    "title": "Lies You've Been Told",
+    "summary": "Thread Opener: lies the audience has been told about a given topic.",
+    "template": "[X] lies you\u2019ve been told about [ReachTopic]:\n\n[Write your thread here]",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "must-have-skills",
+    "title": "Must-Have Skills",
+    "summary": "Thread Opener: skills everyone should have.",
+    "template": "[X] must-have [PopularPlatform/Topic] skills everyone should know:\n\n[Write your thread here]",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "timeless-wisdom",
+    "title": "Timeless Wisdom",
+    "summary": "Thread Opener: share your key takeaways from an expert's advice.",
+    "template": "I am obsessed with learning about [ReachTopic].\n\nSo I went and devoured [X] years of [FamousPerson] advice.\n\nThe result?\n\nI walked away with [X] timeless principles from the greatest [FamousPersonStatus] in the world.\n\nHere are the golden takeaways:\n\n[Write your thread here]",
+    "category": "Social Proof / Spotlight"
+  },
+  {
+    "id": "beginner-playbook",
+    "title": "Beginner Playbook",
+    "summary": "Thread Opener: the beginner's guide to achieving success in a specific niche.",
+    "template": "The First-Time [Niche] Playbook.\n\n(Read this if you want to [Outcome1], [Outcome2], and [Outcome3].)\n\n[Write your thread here]",
+    "category": "Book-Based"
+  },
+  {
+    "id": "niche-101",
+    "title": "Niche 101",
+    "summary": "Thread Opener: tips on how to get desirable outcomes in your niche.",
+    "template": "[Niche] 101\n\nI have been studying [Niche] for the past X years.\n\nIn that time, I have:\n\n[Outcome1]\n\n[Outcome2]\n\n[Outcome3]\n\nWant to do the same?\n\nDo these [X][Tips]:\n\n[Write your thread here]",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "step-by-step-framework",
+    "title": "Step-By-Step Framework",
+    "summary": "Thread Opener: how to solve a specific problem step-by-step, without giving up something desirable.",
+    "template": "Have you ever wondered how some people solve [Problem] without giving up [Benefit]?\n\nWell, here\u2019s the easy [X]-step framework they use:\n\n[Write your thread here]",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "unexpected-outcomes",
+    "title": "Unexpected Outcomes",
+    "summary": "Thread Opener: unexpected but valuable outcomes that you've experienced from your niche.",
+    "template": "I have been in [Niche] for [X] years.\n\nMost people think \u201csuccess\u201d in [Niche] means [Definition].\n\nAnd sure, that\u2019s true.\n\nBut here are [X] unexpected outcomes I ended up experiencing that I value way more:\n\n[Write your thread here]",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "zero-to-niche-hero",
+    "title": "Zero to Niche Hero",
+    "summary": "Thread Opener: lessons you can share with your audience about how you got to where you are today.",
+    "template": "[X] years ago, I didn\u2019t know anything about [Niche].\n\nToday, I am [Achievement].\n\nHere are [X] unforgettable lessons I\u2019ve learned about [Topic]:\n\n[Write your thread here]",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "my-strange-journey",
+    "title": "My Strange Journey",
+    "summary": "Share a strange journey you've recently experienced and how it helped you accomplish something.",
+    "template": "Last week, I crossed [Milestone].\n\nIt took [X] days. It was gruelling. But it was worth it.\n\nHere are the [X] steps of my strange journey.\n\nHope it\u2019s helpful to someone:\n\n1/ [SimpleStep1]\n\nWhen you are first getting started trying to [Outcome], this is the best thing you can do.\n\nDon\u2019t overthink it.\n\nDon\u2019t make it more complicated than it needs to be.\n\nJust get started\u2014and see where your strange journey takes you.\n\n2/ [ProgressStep2]\n\nAs you get moving, what you end up learning is that:\n\n[ConventionalWisdom1] is wrong.\n\n[ConventionalWisdom2] doesn\u2019t work.\n\n[ConventionalWisdom3] is a waste of time.\n\nIn reality, [ProgressStep2] is the best thing you can do.\n\n3/ [UnconventionalStep3]\n\nAs soon as I reached [Milestone], I hit a roadblock.\n\nI was making progress, but I didn\u2019t know:\n\nHow to [Question1]\n\nHow to [Question2]\n\nOr how to [Question3]\n\n[UnconventionalStep3] changed everything for me.\n\nAnd here\u2019s why\u2026\n\n4/ [UnconventionalStep4]\n\nAs soon as I started doing [UnconventionalStep3], I started to\u2026\n\n[SurprisingOutcome1]\n\n[SurprisingOutcome2]\n\n[SurprisingOutcome3]\n\nWhich led to me [UnconventionalStep4].\n\nWhich led to [SurprisingOutcome4].\n\n5/ [UnconventionalStep5]\n\nIt took me a while, but eventually, I experienced a breakthrough.\n\nI realized that the key to [Outcome] was [UnconventionalStep1], [UnconventionalStep2], and [UnconventionalStep3], compounded over a long period of time.\n\nAnd [X] days later, here I am.\n\nI share all of this because I believe you can experience the same sort of transformation in your own life.\n\nAnd then you\u2019ll have a \u201cstrange journey\u201d you can share of your own.\n\n(I\u2019d love to read it.)",
+    "category": "Personal Story"
+  },
+  {
+    "id": "x-asset-y-outcome-in-z-time",
+    "title": "X Asset, Y Outcome, in Z Time",
+    "summary": "Describe how you were able to achieve an outcome in a short amount of time.",
+    "template": "A [ValuableThing] is a massive asset.\n\nI have attracted [Y] [Audience] in just [Z] [Time].\n\nHere are the [X] simple things I did:\n\nStep 1: [ActionStep1]\n\nIn [Month], I committed to [Outcome].\n\nI started by [ActionStep1].\n\nMy 2 goals were simple:\n\n1) [Goal1]\n\n2) [Goal2]\n\n[Screenshot Proof]\n\nStep 2: [ActionStep2]\n\nBy [Month], I had achieved my goals.\n\nBut there was more to do if I wanted to unlock [Outcome].\n\nSo, I changed my strategy:\n\n[NewStep1]\n\n[NewStep2]\n\n[NewStep3]\n\n[Screenshot Proof]\n\nStep 3: [ActionStep3]\n\nAt the same time, I decided to start [ActionStep3].\n\nThe system I created for myself was simple:\n\n[RepeatableTask1]\n\n[RepeatableTask2]\n\n[RepeatableTask3]\n\n[Screenshot Proof]\n\nStep 4: [ActionStep4]\n\nThis is where the compounding really began.\n\nEvery morning, I would [ActionStep4], and after a few [Time], I started to notice:\n\n[Benefit1]\n\n[Benefit2]\n\n[Benefit3]\n\n[Benefit4]\n\nI was cruising.\n\n[Screenshot Proof]\n\nStep 5: [ActionStep5]\n\nOnce I got to [Milestone], all I had to do was [ActionStep5] to keep my systems on autopilot.\n\nAnd this is how I reached [Y] [Audience] in just [Z] [Time].\n\nAnd how you can too.",
+    "category": "Personal Story"
+  },
+  {
+    "id": "thought-leader-profiles",
+    "title": "Thought Leader Profiles",
+    "summary": "Curate the timeless stories and insights of other inspiring people.",
+    "template": "While no one was looking, [ThoughtLeader] created [Creation], [Description] [Status].\n\nToday, [Creation] is one of the world\u2019s most [Achievement].\n\nHere\u2019s [ThoughtLeader]\u2019s story:\n\nQuick backstory:\n\n[ThoughtLeader] grew up in [Place].\n\n[Obstacle]\n\n[WeirdFact]\n\nThe odds:\n\nTo say [ThoughtLeader] was setup for success from the beginning would be an overstatement.\n\nThe odds of success for [Comparison] are [Odds].\n\nAnd only [X%] make it to [FirstAccomplishment].\n\nThe goal:\n\nBut [ThoughtLeader] had [His/Her/Their] sights set on [Goal].\n\nAnd for [Time], they were relentless about [Habit1], [Habit2], [Habit3].\n\nThe obstacle:\n\nUnfortunately, success turned out to be a lot harder than they originally imagined.\n\n[Obstacle1]\n\n[Obstacle2]\n\n[Obstacle3]\n\nAnd by [Date], they almost chose to give up.\n\nThe breakthrough:\n\nUntil one day, [MomentOfChange].\n\nAs the story goes, [Story].\n\nAnd the rest is history.\n\nThe achievement:\n\nBetween [Date] and [Date], [ThoughtLeader] went on to:\n\n[Achievement1]\n\n[Achievement2]\n\n[Achievement3]\n\nMaybe most importantly, they [Achievement4].\n\nThe lesson:\n\nI love [ThoughtLeader]\u2019s story because it represents [LifeLesson].\n\nIt reminds us of the power of [Habit1], [Habit2], and [Habit3], compounded over time.\n\nBecause when we focus on the right things, where we\u2019re headed is certain.\n\nWe just need the future to catch up.",
+    "category": "Curation"
+  },
+  {
+    "id": "timeless-frameworks",
+    "title": "Timeless Frameworks",
+    "summary": "Build and share new ways of thinking about the world.",
+    "template": "The most [Status] [Person/Company] of the last [X] [Time]:\n\n[Name].\n\nBack in [Date], [Person/Company] shared their [X] rules for [Topic].\n\nAnd these rules are a must-read for [Audience1], [Audience2], and [Audience3] who want to [Outcome].\n\nHere\u2019s the breakdown:\n\nRule #1: [Rule1]\n\nWhat the audience cares about isn\u2019t [Myth].\n\nIt\u2019s [RealAnswer].\n\nDon\u2019t forget which one matters most.\n\nRule #2: [Rule2]\n\nMost people who try to [Outcome] think [Myth].\n\nIn actuality, it\u2019s the opposite.\n\n[RepeatRule2]\n\nRule #3: [Rule3]\n\nIt takes people a long time to learn this one.\n\nSuccess is not about [WrongAnswer].\n\nInstead, it\u2019s about practicing [Rule3] over and over again\u2014until one day, you achieve [Outcome].\n\nRule #4: [Rule4]\n\nThis one is my favorite.\n\nWhether you are a [Audience1], [Audience2], or [Audience3], this rule still applies.\n\nAnd usually makes all the difference.\n\nRule #5: [Rule5]\n\nThis is true for most things in life.\n\nYour goal should not be to [WrongOutcome].\n\nInstead, you should be more concerned with [RightOutcome].\n\nThen, and only then, will you follow in the footsteps of the most [Status] [Person/Company] ever.",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "tools-curation",
+    "title": "Tools Curation",
+    "summary": "Share organized lists of valuable tools, platforms, books, podcasts, etc.",
+    "template": "[X] hidden [Platform] features guaranteed to [Outcome]:\n\n[Feature1]\n\n[Description]\n\n[Feature2]\n\n[Description]\n\n[Feature3]\n\n[Description]\n\n[Feature4]\n\n[Description]\n\n[Feature5]\n\n[Description]",
+    "category": "Curation"
+  },
+  {
+    "id": "viral-opinions",
+    "title": "Viral Opinions",
+    "summary": "Present your insights and perspectives in a way that scales to millions of readers.",
+    "template": "A few controversial things I believe about [Topic]:\n\n1) [StrongOpinion1]\n\nI\u2019m not saying [SubtleDistinction].\n\nI\u2019m just saying [ClarifyingStatement].\n\n2) [StrongOpinion2]\n\nContrary to popular belief, [ClicheAction] is a myth.\n\n[FailureExample1]\n\n[FailureExample2]\n\n[FailureExample3]\n\n[ClicheAction] is a fast-track to [UndesirableOutcome].\n\n3) [StrongOpinion3]\n\n\u201cMost people\u201d do what \u201cmost people\u201d do.\n\nWhich leads to\u2026\n\n[NegativeStat1]\n\n[NegativeStat2]\n\n[NegativeStat3]\n\nClearly what \u201cmost people do\u201d doesn\u2019t work.\n\nSo do something else.\n\n4) [StrongOpinion4]\n\n99% of the time, this is a giant mistake.\n\nInstead, [Name] has a great framework for achieving [Outcome] without falling into [Trap].\n\n[Step1]\n\n[Step2]\n\n[Step3]\n\n5) [StrongOpinion5]\n\nPursuing [Outcome] is a silly goal.\n\nBecause [UnconventionalReason].\n\n[DifferentOutcome] is a better pursuit in life.\n\n[Benefit1]\n\n[Benefit2]\n\n[Benefit3]",
+    "category": "Social Proof / Spotlight"
+  },
+  {
+    "id": "wild-unknown-stories",
+    "title": "Wild Unknown Stories",
+    "summary": "Take readers on a journey that will surprise and delight them.",
+    "template": "[Person/Company] has officially reached [GiantOutcome].\n\nHere\u2019s what you probably don\u2019t know:\n\nWhen [Person/Company] first started back in [Date], they had [NoOutcome]. But just a few [Time] later, they [FirstBigOutcome].\n\nHow did this happen? [Twist]\n\nHere\u2019s the story:\n\n[Person/Company]\u2019s story begins in [Date], [SpecificDetail].\n\n[UnexpectedAnecdote].\n\nWhile there, [Person] wasn\u2019t even trying to [Outcome].\n\nFor a while, [Name] tried to find success doing random things:\n\n[Experience1]\n\n[Experience2]\n\n[Experience3]\n\nUntil one day, everything changed.\n\n[MomentOfChange].\n\nIt was [Date] and [Name] became the first [Status].\n\nThey saw this as an opportunity\u2014and took it.\n\nTheir gameplan:\n\n[Tactic1]\n\n[Tactic2]\n\n[Tactic]\n\nAs you can probably guess: it worked.\n\nBy [Date], [Person] had risen to a wild level of success\u2014way beyond they probably ever thought possible for themselves.\n\n[Outcome1]\n\n[Outcome2]\n\n[Outcome3]\n\nAnd the rest is history.\n\nI love this story because it is the perfect encapsulation of what it takes to achieve [Outcome], but also shows how in order to be \u201clucky,\u201d you need to put yourself in a position to receive luck.\n\nGreat reminder for anyone with big dreams.",
+    "category": "Social Proof / Spotlight"
+  },
+  {
+    "id": "the-\u201cchatgpt-prompt-giveaway\u201d-hook",
+    "title": "The \u201cChatGPT Prompt Giveaway\u201d Hook",
+    "summary": "Give users a free solution to a painful problem in a short time.",
+    "template": "How to use [Tool/Technique] to generate [Huge Outcome] in [Short Timeframe]\u2014even if you think [Common Obstacle or Challenge] (THREAD):",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "the-\u201ccurated-books\u201d-hook",
+    "title": "The \u201cCurated Books\u201d Hook",
+    "summary": "Give your readers a list of the top books in a category.",
+    "template": "Over the past [Time Period], I have read over [Number] [Type of Books].\n\n99% were [A Waste Of Time].\n\nThey should have been [Solution] instead.\n\nSave yourself the time and just [Read/Watch/Listen] these [Number].",
+    "category": "Curation"
+  },
+  {
+    "id": "the-\u201cbest-selling-book-framework\u201d-hook",
+    "title": "The \u201cBest-Selling Book Framework\u201d Hook",
+    "summary": "Breakdown a best-selling book.",
+    "template": "[Book] is the [Number] best-selling book of the [Time Period].\n\nOnly behind [Another Well-Known Book]\n\nAnd [Author] used [Framework] for [Surprising Use]\n\nHere\u2019s the breakdown:\n\n[Include Image of Handwritten Breakdown]",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "the-last-month-recap",
+    "title": "The Last Month Recap",
+    "summary": "A thread opener to recap your best posts from the last month.",
+    "template": "Last month, I wrote every [Metric, e.g. every single day], racking up [X] hours of writing time.\n\nAnd these [X] posts got the most views and engagement (collected here so I can look back and reflect on the journey so far):",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "return-to-a-moment-in-time",
+    "title": "Return To A Moment In Time",
+    "summary": "Look back on your most popular posts.",
+    "template": "I\u2019ve been writing online since [Year].\n\nSince then, I\u2019ve posted [Number] times.\n\nBut X buries every piece of content shortly after publishing.\n\nSo, I collected [Number] of my most popular posts from the [Month] [Year] archive (so I can see my progress and spark new ideas):",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "the-rewind-thread",
+    "title": "The Rewind Thread",
+    "summary": "Look back on your Digital Writing journey by curating your best posts",
+    "template": "Since [Year], I've posted [X] times and grown my following to [Number].\n\nHere are my [Number] top-performing posts of all time collected in one place (so I can savor the journey and look forward to the future):",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "the-creator-friends-curation",
+    "title": "The Creator Friends Curation",
+    "summary": "Curate the best posts from your friends.",
+    "template": "There is a limitless amount of free education on X.\n\nBut the algorithm eventually buries all the best posts.\n\nHere are [X] of my favorite posts from [Month] [Year], written by my friends (so I can find them easily later):",
+    "category": "Curation"
+  },
+  {
+    "id": "the-creator-time-machine",
+    "title": "The Creator Time Machine",
+    "summary": "Map the journey of a Creator in a single thread.",
+    "template": "[Creator Name] ([Creator Handle]) has [X] followers.\n\nBut in [Month] [Year], he started at 0.\n\nThese are their top-performing posts written in the last [X] years (these have racked up [Number] views):",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "the-reflection-thread",
+    "title": "The Reflection Thread",
+    "summary": "Look back on your journey so far (the good, the bad, and the ugly).",
+    "template": "This year, I [Achievement / Outcome].\n\nBut in [Year] I was:\n\n\u2022 [Negative Position 1]\n\n\u2022 [Negative Position 2]\n\n\u2022 [Negative Position 3]\n\nThese [Number] posts were major turning points in my journey (collected here to inspire you to take action):",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "to-start-today-do-this",
+    "title": "To Start Today, Do This",
+    "summary": "Share your journey with a skill or framework and explain what you wish you knew before you got started.",
+    "template": "[X Months/Years] ago, I thought [skill] was a [common misconception].\n\nNow I\u2019m convinced [skill] is the most important skill you can develop.\n\nBut when I started, I was completely [problem most people face].\n\nSo here's my [framework] I wish I had (that you can start using today):",
+    "category": "Personal Story"
+  },
+  {
+    "id": "skip-to-the-end",
+    "title": "Skip To The End",
+    "summary": "Explain to your audience how to save time mastering a key skill or framework.",
+    "template": "The most valuable skill in [industry or niche]:\n\n[Answer]\n\nI spent [a lot of work to find the answer]\n\nHere is my [X-step process / framework] that [will save you a bunch of time]:",
+    "category": "Insight & Prediction"
+  },
+  {
+    "id": "how-to-overcome-a-common-problem",
+    "title": "How To Overcome A Common Problem",
+    "summary": "Explain how to overcome the biggest problems in your industry without wasting time, money, or effort.",
+    "template": "[Insert common question for an industry]\n\nBecause [external enemy to blame the problem]\n\nLuckily [overcoming problem] is simple, if you know where to start.\n\nAnd unlike [external enemy], this won\u2019t cost you [big cost]\n\nInstead, use this dead-simple [X-step framework]:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "how-to-do-x-without-y-even-if-you-think-z",
+    "title": "How To Do X Without Y (Even If You Think Z)",
+    "summary": "Share how anyone can beat their self-doubt and master a skill or framework without hours of wasted effort.",
+    "template": "How to\u00a0do [thing]\u00a0[without a bunch of work]\u00a0- even if\u00a0[most common objection to being able to do x thing]",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "simple-but-unique-mechanism",
+    "title": "Simple (But Unique) Mechanism",
+    "summary": "Share your unique way of beating a problem or learning a skill without doing what most people do.",
+    "template": "[Strong credibility statement]\n\nBut I [don\u2019t do the thing that most people try to do]\n\nInstead, I use [unique mechanism that doesn\u2019t take much time]\n\nIt\u2019s called the [Name of the Mechanism] \u2014 here\u2019s how it works:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "mistakes-to-avoid",
+    "title": "Mistakes To Avoid",
+    "summary": "Share the mistakes to avoid when trying to achieve an outcome.",
+    "template": "This is me at [Age].\n\n[Negative Adjective 1], [Negative Adjective 2], [Negative Adjective 3]\n\nNow, I'm [Age].\n\n[Positive Outcome 1], [Positive Outcome 2], [Positive Outcome 3]\n\nHere's a breakdown of all the mistakes I learned along the way:",
+    "category": "Personal Story"
+  },
+  {
+    "id": "timeless-advice-and-frameworks",
+    "title": "Timeless Advice & Frameworks",
+    "summary": "Distill advice and takeaways from all the episodes of your favorite podcast.",
+    "template": "I listened to every episode of the [Podcast Name].\n\nAnd what's buried inside these [interviews/break downs]?\n\nTimeless [Topic] advice for becoming [Outcome].\n\nHere are [X] frameworks distilled from [Y] episodes:",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "favorite-episode-takeaways",
+    "title": "Favorite Episode Takeaways",
+    "summary": "Share 3 powerful takeaways from your favorite podcast episode.",
+    "template": "The best podcast I ever listened to on [Topic]:\n\n[Podcast Episode] by [Podcast Name]\n\n\u2022 [Takeaway 1]\n\n\u2022 [Takeaway 2]\n\n\u2022 [Takeaway 3]\n\nTransformed the way I see [Outcome].",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "right-way-vs-wrong-way",
+    "title": "Right Way vs Wrong Way",
+    "summary": "Lay out what's keeping people stuck and how to solve it.",
+    "template": "[Negative Adjective] [Person In Your Niche]:\n\n\u2022 [Mistake 1]\n\n\u2022 [Mistake 2]\n\n\u2022 [Mistake 3]\n\n[Positive Adjective] [Person In Your Niche]:\n\n\u2022 [Step 1]\n\n\u2022 [Step 2]\n\n\u2022 [Step 3]\n\nChoose wisely.",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "myth-busting-approach",
+    "title": "Myth Busting Approach",
+    "summary": "Explain the myths holding people back and how you beat them.",
+    "template": "[Group of people] approach [goal] the wrong way.\n\n[Myth 1] & [Myth 2]\n\n[Sentence explaining correct beliefs]\n\nHere's how you can use [Name Approach] to do just that:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "the-easy-wins",
+    "title": "The Easy Wins",
+    "summary": "Share the wins you get when you take a certain path in your industry (and how you've helped others).",
+    "template": "[Your Niche / Profession] is the best way to [Outcome] as a [Target Audience]:\n\n\u2022 [Benefit 1]\n\n\u2022 [Benefit 2]\n\n\u2022 [Benefit 3]\n\nThat's why I love reading testimonials from our [Customers/Community/Students], like [Name] here:\n\n<Testimonial Screenshot>",
+    "category": "Social Proof / Spotlight"
+  },
+  {
+    "id": "big-mistakes-case-study",
+    "title": "Big Mistakes Case Study",
+    "summary": "Explain the biggest mistakes your customers/subscribers make, how to fix them, and a case study to back it up.",
+    "template": "I have [coached/taught/worked with] [X] of [Target Audience].\n\nAnd after spending [X] hours examining their [Business / Process / Habits etc], they make 3 big mistakes.\n\nHere's where they go wrong, how to fix it, and how [Customer Name] achieved [Outcome] in [Small Time Frame]:",
+    "category": "Personal Story"
+  },
+  {
+    "id": "the-cheat-codes",
+    "title": "The Cheat Codes",
+    "summary": "Explain the problems your customers face and the outcomes they get by using your cheat codes\u2014working with you or buying your product.",
+    "template": "I have [coached/taught/worked with] [X] of [target audience].\n\nBefore they work with me they:\n\n- Problem 1\n\n- Problem 2\n\n- Problem 3\n\nOnce they use [Product/Service/Offer] they:\n\n- Outcome 1\n\n- Outcome 2\n\n- Outcome 3\n\n[Offer] is your cheat code.\n\n<Image of customer testimonial>",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "the-public-testimonial",
+    "title": "The Public Testimonial",
+    "summary": "Repost a public testimonial from one of your customers/clients/subscribers.",
+    "template": "Amazing takeaways from [Name], one of my customers.\n\nLove seeing these shared in public! Keep 'em coming!\n\n<Link to public post about your product>",
+    "category": "Social Proof / Spotlight"
+  },
+  {
+    "id": "another-sucess-story",
+    "title": "Another Sucess Story",
+    "summary": "Share a win or testimonial while also hinting at how successful your product is in terms of number of customers/subscribers etc.",
+    "template": "Another incredible [Product] success story ([Metric To Show The Success / Popularity Of Your Product]):\n\n<Testimonial image / win from your customer>",
+    "category": "Personal Story"
+  },
+  {
+    "id": "the-game-changer-talk",
+    "title": "The Game-Changer Talk",
+    "summary": "Write a thread on the on TED Talk that changed your life.",
+    "template": "I'm [Age].\n\n[X] years ago, I watched [TED Talk].\n\nSince then I have [Outcome 1] and [Outcome 2]\n\nHere are [X] life-changing lessons I took away from this talk (start applying these in 2 minutes):",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "the-only-ted-to-watch",
+    "title": "The Only TED To Watch",
+    "summary": "Give your takeaways on the best TED talk you've ever watched.",
+    "template": "The only TED Talk you need to watch on [Topic]:\n\n[TED Talk]\n\n\u2022 [Takeaway 1]\n\n\u2022 [Takeaway 2]\n\n\u2022 [Takeaway 3]\n\nAn inspiring talk if you want to [Outcome].",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "biggest-life-mistakes",
+    "title": "Biggest Life Mistakes",
+    "summary": "What are your biggest life mistakes? Share them with your audience.",
+    "template": "Here are my X biggest life mistakes.\n\nI am X years old.\n\nI still feel young, but old enough to have real regrets.\n\nLet's dive in:",
+    "category": "Personal Story"
+  },
+  {
+    "id": "the-path-to-mastery-in-5-minutes",
+    "title": "The Path To Mastery (In 5 Minutes)",
+    "summary": "Share a condensed version of something that took you years to master.",
+    "template": "This took me X years to master, I\u2019ll teach it to you in X minutes.\n\nStop trying to [Common Action] (and why you should focus on these [Unexpected Action] instead):",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "smart-people-takeaways",
+    "title": "Smart People Takeaways",
+    "summary": "Share your realizations about the smartest people you know after spending hours studying them.",
+    "template": "[X] realizations about the smartest people I look up to (after spending [Y]+ hours studying them):",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "predict-the-future",
+    "title": "Predict The Future",
+    "summary": "Explain the future of your niche, topic, or industry in 5 minutes.",
+    "template": "This is the greatest time to [Action/Be In Industry Or Niche] in the last [X] years.\n\nI know because I have [Achievement 1], [Achievement 2], [Achievement 3].\n\nHere's the future of [Industry/Niche] in 5 minutes or less:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "podcasts-on-repeat",
+    "title": "Podcasts On Repeat",
+    "summary": "Share the podcasts you listen to on repeat and how they accelerated your personal development.",
+    "template": "[X] podcasts I re-listen to every month (because of the huge impact they had on my thinking at the time):",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "the-most-valuable-skill",
+    "title": "The Most Valuable Skill",
+    "summary": "Explain the most valuable skill in your niche and what people get wrong about it.",
+    "template": "The [Your Title/Label] most valuable skill:\n\n[Skill].\n\nIt's not about [Myth About Skill].\n\nIt's about knowing [Important Parts Of Skill].",
+    "category": "Insight & Prediction"
+  },
+  {
+    "id": "speaking-from-experience",
+    "title": "Speaking From Experience",
+    "summary": "What traps are keeping people in your niche stuck? Explain how to escape them to unlock an Ultimate Positive Outcome.",
+    "template": "I've [Achievement For Your Customers/Audience].\n\n99% of them fall into [X] big traps\u2014mistakes that keep them [Negative Outcome]\n\nHere's how to quickly fix them (so you can start [Positive Outome] today):",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "a-lesson-you-wish-youd-learned-sooner",
+    "title": "A Lesson You Wish You'd Learned Sooner",
+    "summary": "Share 1 lesson you wish you'd learned sooner (and why)",
+    "template": "Another [Topic] lesson I wish I'd learned sooner:\n\n[Lesson].\n\n[1-liner explanation].",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "your-topic-reframe",
+    "title": "Your Topic Reframe",
+    "summary": "What's one reframe that's helped you in your niche? Share how it's helped you.",
+    "template": "How I think about [Topic]:\n\n[One simple sentence reframe]\n\n[1 sentence to expand on reframe].\n\nAnd my goal is to [Outcome] without [Painful / Hard Activity].",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "the-profile",
+    "title": "The Profile",
+    "summary": "Share insights from a famous person in your niche (or beyond).",
+    "template": "Meet [Person].\n\n[Achievement or Recognition].\n\n[Other Notable Achievements or Projects].\n\nHere are [Number] of [Possessive] timeless [Subject Insights] (on [Specific Topics]):",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "your-favorite-person",
+    "title": "Your Favorite Person",
+    "summary": "Profile your favorite person in your industry/niche, and share lessons you learned from them.",
+    "template": "This person is a [Profession 1], [Profession 2], [Profession 3]...\n\nAnd one of my favorite humans ever.\n\nSteal these [Number] lessons from [Person] on [Main, Positive Topic] (& [Negative Topic]):",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "beat-the-common-misconception",
+    "title": "Beat The Common Misconception",
+    "summary": "A hook for a How To thread or Atomic Essay introduction tweet.",
+    "template": "How to [Achieve Desired Outcome] (without [Common Misconception]):",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "lessons-you-dont-want-to-forget",
+    "title": "Lessons You Don't Want To Forget",
+    "summary": "A viral thread hook or introduction tweet to an Atomic Essay about your most important lessons so far this year/month/week.",
+    "template": "[Number] important lessons I\u2019m trying to stamp into my brain (from [Time Period] so far):",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "your-advice-to-the-younger-generation",
+    "title": "Your Advice To The Younger Generation",
+    "summary": "Share what you think people younger than you should know.",
+    "template": "I\u2019m [Age].\n\nIf you're still in your [Age Range], read this:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "wind-back-the-clock",
+    "title": "Wind Back The Clock",
+    "summary": "Share a story about how you want from on top of the world to somewhere not as nice (and the lessons you learned along the way).",
+    "template": "In [Year], at [Age], I felt on top of the world.\n\nI'd just [Significant Achievement]. Well, kinda.\n\nI'll tell you the story of how I [Unexpected Outcome]:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "hard-earned-advice",
+    "title": "Hard-Earned Advice",
+    "summary": "Share a complete list of advice you've learned in your role/industry. Can be a single tweet or a hook into a longer thread.",
+    "template": "[Number] pieces of advice after [Time Period] as a [Role]:\n\n1. [Advice 1]\n\n2. [Advice 2]\n\n3. [Advice 3]\n\n4. [Advice 4]",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "what-no-one-tells-you",
+    "title": "What No One Tells You",
+    "summary": "Share insights no-one else will (in a thread form or image).",
+    "template": "What no one tells you about being a [Role].\n\n1. [Advice 1]\n\n2. [Advice 2]\n\n3. [Advice 3]\n\n4. [Advice 4]\n\n5. [Advice 5]\n\n6. [Advice 6]\n\n7. [Advice 7]",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "from-eye-opening-realization-to-action",
+    "title": "From Eye-Opening Realization to Action",
+    "summary": "Share the 1 realization that made you start taking a certain action.",
+    "template": "Once you realize [Eye-Opening Realization], you almost have no choice but to [Action to Take].",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "short-term-sacrifices-for-long-term-gain",
+    "title": "Short-term Sacrifices For Long-Term Gain",
+    "summary": "Share what you need to ignore now so you can reap 10x that when you reach the top.",
+    "template": "All the [Short-Term Sacrifices] on the way up will be available to you [Magnitude of Increase] once you [Achieve Success].",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "the-keystone-skill",
+    "title": "The Keystone Skill",
+    "summary": "Which small skill supports a bigger (more impressive) skill? Explain how to get started.",
+    "template": "If you can [Specific Skill], you can [Broad Skill].\n\nHere's how to get started:",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "change-how-people-perceive-you",
+    "title": "Change How People Perceive You",
+    "summary": "Explain how to break a habit that's making you look bad.",
+    "template": "[Undesirable Behavior] make you seem [Negative Perception].\n\nBreak the habit of [Undesirable Behavior] and use these [Number] alternatives instead:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "curated-insights-from-your-favorite-content",
+    "title": "Curated Insights From Your Favorite Content",
+    "summary": "Share 1 piece of content that changed your life & the lessons you took from it.",
+    "template": "A [Type of Content] that changed my life:\n\n[Content Title] with [Person]\n\nI [Listened/Read] [Time Period] ago and still apply the lessons from it every day.\n\nHere are [Number] of my favorite [Key Insights] from the [Type of Content] (that you can use to [Benefit]):",
+    "category": "Curation"
+  },
+  {
+    "id": "scale-the-conversation",
+    "title": "Scale The Conversation",
+    "summary": "Share the insights you gave in a recent conversation (so you can scale your message online).",
+    "template": "I\u2019ve been [Activity] for [Time Period].\n\nSo I sat down with [Person] to discuss what it takes to be a successful [Role].\n\nHere are [Number] faulty beliefs stopping [Group] from [Desired Outcome]:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "a-well-thought-out-decision",
+    "title": "A Well Thought-Out Decision",
+    "summary": "Explain why you didn't take a course of action you were previously excited about.",
+    "template": "I considered [Action].\n\nAfter some research, I realized [Contrary Conclusion].\n\nThere is no chance [Assertion].\n\nAnd [Assertion 2].\n\nThe reason surprised me:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "everyone-else-is-wrong",
+    "title": "Everyone Else Is Wrong",
+    "summary": "Explain a common misconception people have about an outcome, what the \"truth\" is, and how to get started to achieving the dream outcome.",
+    "template": "Everyone thinks [Common Misconception].\n\nBut [Contrary Truth].\n\n[Number] habits that will make you [Desired State] than [Comparison Group]:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "best-investment-this-year",
+    "title": "Best Investment This Year?",
+    "summary": "Ask your audience what's the best investment they've made in a chosen area for this year.",
+    "template": "What's the best investment you've made in your [Aspect] this year?",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "what-should-i-be-reading",
+    "title": "What Should I Be Reading?",
+    "summary": "Crowdsource reading recommendations for your summer vacation (and more!)",
+    "template": "Looking for [Season] [Activity] recommendations.\n\nWhat's 1 book I should absolutely prioritize and why?",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "the-tough-pill-to-swallow",
+    "title": "The Tough Pill To Swallow",
+    "summary": "Point out a common path which is hard to take and explain the rules your audience needs to break free.",
+    "template": "[Doing Common Path] for [Time Period] is a tough pill to swallow.\n\nInstead, think about your life using these [Number] rules:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "the-habits-that-changed-your-life",
+    "title": "The Habits That Changed Your Life",
+    "summary": "Share your journey and the habits that helped get you to where you are today.",
+    "template": "I used to be [Negative State 1], [Negative State 2], and [Negative State 3].\n\nNow, I only [Positive Activity 1], [Positive Activity 2], and make [Impressive Income] every [Time Period].\n\n[Number] habits that transformed my life:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "masterclass-golden-nuggets",
+    "title": "MasterClass Golden Nuggets",
+    "summary": "Share your main takeaways from a MasterClass you're obsessed with.",
+    "template": "[Name] is one of the [Role/Profession] of all time.\n\n\u2022 [Achievement 1]\n\n\u2022 [Achievement 2]\n\n\u2022 [Achievement 3]\n\n\u2022 [Achievement 4]\n\nI am fascinated by [Posessive] career.\n\nSo I watched [Posessive] MasterClass (twice!).\n\nHere are the golden nuggets:",
+    "category": "Social Proof / Spotlight"
+  },
+  {
+    "id": "i-watched-every-masterclass",
+    "title": "I Watched Every MasterClass",
+    "summary": "You've watched very MasterClass on a topic. Now share all your takeaways with your audience.",
+    "template": "I watched every MasterClass on [Topic].\n\n\u2022 [Teacher 1]\n\n\u2022 [Teacher 2]\n\n\u2022 [Teacher 3]\n\nAfter [X]+ hours, here are my [Y] takeaways on how to [Outcome]",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "controversial-reminder",
+    "title": "Controversial Reminder",
+    "summary": "Share a reminder about why a commonly held belief isn't true\u2014and the realizations that helped you get there.",
+    "template": "Your monthly reminder:\n\n[Controversial Opinion]\n\n[Clarifying Statement]\n\n[X] realizations about [topic] (after spending 500+ hours studying them):\ud83e\uddf5",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "business-rules",
+    "title": "Business Rules",
+    "summary": "Business forces you to make compromises. What rules do you have for yourself? Share them with your audience.",
+    "template": "In [Year], I set [X] business rules for myself that changed my life.\n\nSince then, I [Achieved Outcome] and added [Y] more rules.\n\nIf you're just getting started in business, read this:\ud83e\uddf5\n\nFor context, I have:\n\n\u2022 [Achievement 1]\n\n\u2022 [Achievement 2]\n\n\u2022 [Achievement 3]\n\nThese [X] rules helped me get there:\n\nRule 1: [Rule]\n\nThis helped me:\n\n\u2022 [Action Step 1]\n\n\u2022 [Action Step 2]\n\n\u2022 [Action Step 3]\n\nIt's my number 1 for a reason\u2014which leads me to my next rule:\n\nRule 2: [Rule]\n\nMost people think becoming successful is [X].\n\nBut it's actually [Y].\n\nThis rule keeps this idea top of mind every single day.",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "advice-i-almost-fell-for",
+    "title": "Advice I Almost Fell For",
+    "summary": "What's some terrible (but commonly accepted) advice you disagree with? Share it and then explain what you did differently.",
+    "template": "Terrible advice I almost fell for:\n\n\u201c[Advice].\u201d\n\nInstead, I found a different (but unconventional) path to [Positive Outcome].\n\nHere's the entire roadmap (from [Negative Position] to [Positive Position]):\n\n[1-3 Sentences Explaining The Position You Were In]\n\n[1-3 Sentences Explaining The Advice You Were Tempted To Follow]\n\nInstead, I decided to do [Uncoventional Advice].\n\nI recommend everyone trying to achieve [X] do the same.\n\nHere's how to get started:\n\nStep 1: [Step]\n\n[1-3 Sentences Explaining The Step]\n\nStep 2: [Step]\n\n\u2022 [Action 1]\n\n\u2022 [Action 2]\n\n\u2022 [Action 3]\n\nOnce you've done this, move on to the final step:\n\nStep 3: [Step]\n\n[1-3 Sentences Explaining The Step]\n\nSo, if you want to achieve [X] you don't need to [Commonly Accepted Advice].\n\nInstead, use this roadmap.\n\nIt worked for me\u2014and I bet it will work for you, too.",
+    "category": "Educational Breakdown"
+  },
+  {
+    "id": "mistakes-+-personal-story",
+    "title": "Mistakes + Personal Story",
+    "summary": "Give the story behind the biggest mistake of your career.",
+    "template": "In [Year], [Unexpected Event Happened].\n\nI [Response To Evejt, Create A Huge Outcome] and thought I'd hit the jackpot.\n\nBut what I did next was the biggest mistake of my career.\n\nHere's the story of how I lost [Something Valuable]: \ud83e\uddf5\n\n[1-3 Sentences Explaining The Context Leading Up To The Unexpected Event]\n\n[1-3 Sentences Explaining The Unexpected Event In Detail]\n\n[What You Did In Response To Unexpected Event]\n\n[1-3 Sentences Explaining What Happened Next]\n\n[Summary of Why Your Response Was A Mistake]\n\n[1-3 Sentences Explaining What You Missed Out On]\n\nLooking back, I should have:\n\n\u2022 [Action 1]\n\n\u2022 [Action 2]\n\n\u2022 [Action 3]\n\nIf I'd known even half of what I know today, that [Outcome] could have been a [Huge Outcome].",
+    "category": "Personal Story"
+  },
+  {
+    "id": "waitlist-is-open",
+    "title": "Waitlist Is Open",
+    "summary": "Annouce your digital product by opening a waitlist (and gather more email subs & potential buyers).",
+    "template": "[Bold Credibility Statement]\n\nAnd I get [DMs/Emails/Calls] every week asking me how to [Outcome].\n\nSo, on [Date], I'll share the full blueprint with you inside [Product Name].\n\nJoin the waitlist in the thread:\n\nGet on the waitlist for some early bird bonuses:",
+    "category": "Curation"
+  },
+  {
+    "id": "product-launch",
+    "title": "Product Launch",
+    "summary": "A short and sweet launch post to mop up some early sales.",
+    "template": "I just released [Product Name]!\n\n\u2022 [Tangible Outcome Your Product Provides]\n\n\u2022 [Tangible Outcome Your Product Provides]\n\n\u2022 [Tangible Outcome Your Product Provides]\n\nThis is everything you need to [Overarching Outcome].\n\n(Link in the next post)\n\nGet your copy here:",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "final-day",
+    "title": "Final Day",
+    "summary": "Let your audience know when they have less than 24 hours to buy.",
+    "template": "[Product Name] disappears in [X] hours!\n\nInside is everything you need to:\n\n\u2022 [Tangible Outcome Your Product Provides]\n\n\u2022 [Tangible Outcome Your Product Provides]\n\n\u2022 [Tangible Outcome Your Product Provides]\n\nGet it to [Outcome]\ud83d\udc47\n\nGrab your copy here (before [Time]):",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "watch-this-interview-on-repeat",
+    "title": "Watch This Interview On Repeat",
+    "summary": "Give your takeaways on an interview you can't stop watching or listening to.",
+    "template": "I can't stop listening to this interview:\n\n[Person] with [Interviewee].\n\nIf you want to [Outcome] in [Year] this is everything you need to know:\ud83e\uddf5\n\n[1-2 Sentences Giving Context On The Interview]\n\nHere are my [X] takeaways:\n\n1. [Takeaway 1].\n\nThis will change how you think about [Topic].\n\nStaple this quote to your bathroom mirror:\n\n\"[Quote]\"\n\n2. [Takeaway 2].\n\nOnce you realize this, you'll want to:\n\n\u2022 [Action Point 1]\n\n\u2022 [Action Point 2]\n\n\u2022 [Action Point 3]\n\nUltimately, this will help you [Outcome].\n\n3. \"[Takeaway In Form Of A Quote].\"\n\nAnother one to staple to your bathroom mirror.\n\nDo this, and you'll be able to [Outcome 1], [Outcome 2], and [Outcome 3].",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "lessons-+-examples",
+    "title": "Lessons + Examples",
+    "summary": "Share the life lessons you learned from an earlier life experience, with examples of how it's helped you in your current phase of life.",
+    "template": "At [Age], I was [Surprising Achievement].\n\nMy [Peers/Parents/Teachers] told me it was a horrible waste of time.\n\nBut [Niche Area] taught me these [X] life lessons (that helped me [Career Outcome]):\ud83e\uddf5\n\nLesson 1: [Lesson].\n\n[1-3 sentences giving examples of how this helped you in your current career/ phase of life]\n\nWhich leads us to:\n\nLesson 2: [Lesson].\n\nWithout this, I would never have:\n\n\u2022 [Example 1]\n\n\u2022 [Example 2]\n\n\u2022 [Example 3]\n\nA game-changer.\n\nLesson 3: [Lesson].\n\n[1-3 sentences giving examples from that period of your life & how it helped you in your current career/ phase of life]\n\nA lesson I wish I learned sooner.",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "tips-+-reasons",
+    "title": "Tips + Reasons",
+    "summary": "Give your audience the tips they need to get a result\u2014and explain the reasons why they work or why people get it wrong.",
+    "template": "I've [Huge Outcome For Your Niche]\n\nBut the crazy part?\n\nI would still be stuck [Negative Position] if I hadn't mastered one skill:\n\n[Skill]\n\nI used these [X] [Skill] tips to become a top 1% [Title]:\ud83e\uddf5\n\nTip 1: [Tip]\n\nThis works because:\n\n\u2022 [Reason 1]\n\n\u2022 [Reason 2]\n\n\u2022 [Reason 3]\n\nSimple but effective.\n\nTip 2: [Tip]\n\nMost people believe [Mistake Relating To Tip].\n\nBut this is wrong for [Reason 1], [Reason 2], [Reason 3].\n\nHarsh but true.\n\nTip 3: [Tip]\n\nMaster this and you'll never be [Negative Postion]\u2014for 3 reasons:\n\n\u2022 [Reason 1]\n\n\u2022 [Reason 2]\n\n\u2022 [Reason 3]\n\nEasy.",
+    "category": "Advice & Life Lessons"
+  },
+  {
+    "id": "the-\u201cyou-want\u201d-story-hook",
+    "title": "The \u201cYou Want?\u201d Story Hook",
+    "summary": "What big outcome does your audience want? Share your zero to hero story of how you achieved it.",
+    "template": "You want [Massive Positive Outcome (MPO)]?\n\n[1-Liner Explaining Simple Answer.]\n\nAt [Age], I was [Negative State 1], [Negative State 2].\n\n[X] months later, I [Outcome Related To MPO].\n\nMost people overthink. I just started.\n\nHere\u2019s the story:\ud83e\uddf5\n\n[1-3 Sentences Expanding On Your Negative State 1 & 2]\n\nThen I [Small Action Which Started You Down An Unexpected Path]\n\n[Expand On Your Journey, With Tweets Mentioning Particular Turning Points]\n\nThis all lead me to: [State Related To \"Simple Answer\" In Hook] And this changed everything for me:\n\n[Expand On The Outcomes, With Tweets Mentioning Particular Turning Points & Achievements]",
+    "category": "Personal Story"
+  }
+]

@@ -1,6 +1,6 @@
 import OpenAI from 'openai'
 import { supabase } from '@/lib/supabase'
-import { getRelevantHooks, getRandomHooks } from '@/lib/hooks'
+// Note: Hook generation is now handled by the new template system in /api/generate-hooks
 
 // Check for OpenAI API key
 if (!process.env.OPENAI_API_KEY) {
@@ -29,13 +29,14 @@ interface GenerationOptions {
   content: string
   threadType: string
   usePersonalContext?: boolean
+  globalRules?: string
   customPromptId?: string
   useEnhancedHooks?: boolean
 }
 
 // New enhanced function with options
 export async function generateThreadEnhanced(options: GenerationOptions): Promise<string[]> {
-  const { content, threadType, usePersonalContext = false, customPromptId, useEnhancedHooks = true } = options
+  const { content, threadType, usePersonalContext = false, globalRules, customPromptId, useEnhancedHooks = true } = options
   
   try {
     let personalContext = ''
@@ -67,20 +68,21 @@ export async function generateThreadEnhanced(options: GenerationOptions): Promis
       }
     }
 
-    // Get relevant hooks (enhanced 100-hook system)
-    const hooks = useEnhancedHooks 
-      ? getRelevantHooks(content, 15) // Get 15 relevant hooks
-      : getRandomHooks(10) // Fallback to 10 random hooks
-
     const threadPrompt = THREAD_TYPE_PROMPTS[threadType as keyof typeof THREAD_TYPE_PROMPTS] || THREAD_TYPE_PROMPTS.summary
 
+    // Add global rules to system prompt if available
+    const globalRulesText = globalRules ? `
+
+CRITICAL GLOBAL RULES (MUST FOLLOW):
+${globalRules}` : ''
+
     // Use custom prompt if available, otherwise use default
-    const systemPrompt = customPrompt || `You are an expert Twitter thread creator. Your job is to transform content into engaging, viral Twitter threads.
+    const systemPrompt = customPrompt || `You are an expert Twitter thread creator. Your job is to transform content into engaging, viral Twitter threads.${globalRulesText}
 
 THREAD REQUIREMENTS:
 - Create 8-12 tweets maximum
 - Each tweet must be under 280 characters
-- Start with an engaging hook from these examples: ${hooks.join('; ')}
+- Start with an engaging hook that captures attention
 - Use emojis strategically (1-2 per tweet)
 - Include line breaks for readability
 - End with a call-to-action or thought-provoking question
